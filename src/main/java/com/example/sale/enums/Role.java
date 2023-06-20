@@ -11,7 +11,9 @@ public enum Role {
 
     SR(1,"星河","SR"),
 
-    YZY(2,"一直娱","YZY");
+    YZY(2,"一直娱","YZY"),
+
+    SV(3,"seventeen","SV");
 
 
     private Integer code;
