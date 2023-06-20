@@ -40,4 +40,8 @@ public class UserEntity implements Serializable {
 	 */
 	private Integer role;
 
+	/**
+	 * 目标
+	 */
+	private Integer target;
 }

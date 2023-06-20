@@ -57,7 +57,7 @@ public class JWTUtils {
      *
      * @return 加密的token
      */
-    public static String sign(Long id) {
+    public static String sign(Integer id) {
         try {
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -71,19 +71,6 @@ public class JWTUtils {
         }
     }
 
-    public static String sign(String openId) {
-        try {
-            Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            // 附带openId信息
-            return JWT.create()
-                    .withClaim("openId", openId)
-                    .withExpiresAt(date)
-                    .sign(algorithm);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     /**
      * 判断过期

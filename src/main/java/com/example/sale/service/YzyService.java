@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface YzyService extends IService<YzyEntity> {
 
-    List<YzyVO> getData();
+    List<YzyVO> getData(Integer target);
 
 }
 

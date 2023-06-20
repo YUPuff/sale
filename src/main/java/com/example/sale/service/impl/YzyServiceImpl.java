@@ -23,15 +23,21 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
     private YzyDao yzyDao;
 
     @Override
-    public List<YzyVO> getData() {
-        List<YzyEntity> list = yzyDao.selectList(new LambdaQueryWrapper<YzyEntity>());
+    public List<YzyVO> getData(Integer target) {
+        List<YzyEntity> list = yzyDao.selectList(new LambdaQueryWrapper<YzyEntity>().eq(target!=null,YzyEntity::getId,target));
         List<YzyVO> res = new ArrayList<>();
         for (YzyEntity entity:list){
             YzyVO yzyVO = new YzyVO();
             BeanUtils.copyProperties(entity,yzyVO);
             Integer sale = entity.getSale();
-            yzyVO.setB(sale/40);
-            yzyVO.setC(sale/45);
+            if (entity.getType() == 1){
+                yzyVO.setB(sale/45);
+                yzyVO.setC(sale/48);
+            }else{
+                yzyVO.setB(sale/40);
+                yzyVO.setC(sale/45);
+            }
+
             res.add(yzyVO);
         }
         return res;

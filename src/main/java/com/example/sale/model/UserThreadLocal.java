@@ -5,6 +5,7 @@ import com.example.sale.vo.UserVO;
 /**
  * 确保用户信息线程隔离
  */
+
 public class UserThreadLocal {
 
     private static final ThreadLocal<UserVO> USER = new ThreadLocal<>();

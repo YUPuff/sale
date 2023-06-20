@@ -1,6 +1,7 @@
 package com.example.sale.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.sale.model.UserThreadLocal;
 import com.example.sale.vo.SrVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,10 @@ public class SrServiceImpl extends ServiceImpl<SrDao, SrEntity> implements SrSer
     @Autowired
     private SrDao srDao;
 
+
     @Override
-    public List<SrVO> getData() {
-        List<SrEntity> list = srDao.selectList(new LambdaQueryWrapper<SrEntity>());
+    public List<SrVO> getData(Integer target) {
+        List<SrEntity> list = srDao.selectList(new LambdaQueryWrapper<SrEntity>().eq(target!=null,SrEntity::getId,target));
         List<SrVO> res = new ArrayList<>();
         for(SrEntity entity:list){
             SrVO srVO = new SrVO();
@@ -35,8 +37,6 @@ public class SrServiceImpl extends ServiceImpl<SrDao, SrEntity> implements SrSer
             Integer inland = stock-g;
             Integer korea = stock-h;
             Integer total = inland+korea;
-            srVO.setInland(inland);
-            srVO.setKorea(korea);
             srVO.setTotal(total);
             srVO.setD(total/40);
             srVO.setE(total/45);

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface SrService extends IService<SrEntity> {
 
-    List<SrVO> getData();
+    List<SrVO> getData(Integer target);
 
 }
 

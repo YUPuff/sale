@@ -48,7 +48,7 @@ public class LoginHandler implements HandlerInterceptor {
             }
         }
         response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(JSON.toJSONString(Result.failure("未登录")));
+        response.getWriter().write(JSON.toJSONString(Result.failure("请刷新")));
         return false;
     }
 }
