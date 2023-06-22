@@ -30,14 +30,26 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
             YzyVO yzyVO = new YzyVO();
             BeanUtils.copyProperties(entity,yzyVO);
             Integer sale = entity.getSale();
-            if (entity.getType() == 1){
-                yzyVO.setB(sale/45);
-                yzyVO.setC(sale/48);
-            }else{
-                yzyVO.setB(sale/40);
-                yzyVO.setC(sale/45);
+            Integer a = 0;
+            Integer b = 0;
+            switch (entity.getType()){
+                case 0:
+                    a = sale/45;
+                    b = sale/40;
+                    break;
+                case 1:
+                    a = sale/48;
+                    b = sale/45;
+                    break;
+                case 2:
+                    a = sale/70;
+                    b = sale/60;
+                    break;
+                default:
+                    a = sale/30;
+                    b = sale/25;
             }
-
+            yzyVO.setCut(a+"~"+b);
             res.add(yzyVO);
         }
         return res;

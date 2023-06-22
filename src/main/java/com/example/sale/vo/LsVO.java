@@ -3,11 +3,15 @@ package com.example.sale.vo;
 import lombok.Data;
 
 @Data
-public class SvVO {
+public class LsVO {
 
     private Integer id;
 
     private String name;
 
-    private String num;
+    private Integer sale;
+
+    private String a;
+
+    private String b;
 }

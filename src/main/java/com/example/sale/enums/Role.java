@@ -13,7 +13,9 @@ public enum Role {
 
     YZY(2,"一直娱","YZY"),
 
-    SV(3,"seventeen","SV");
+    SV(3,"seventeen","SV"),
+
+    LS(4,"lessfirm","LS");
 
 
     private Integer code;

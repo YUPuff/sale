@@ -32,20 +32,30 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
             SvVO svVO = new SvVO();
             BeanUtils.copyProperties(entity,svVO);
             Integer sale = entity.getSale();
-            switch (entity.getType()){
-                case 0:
-                    sale /= 100;
-                    break;
-                case 1:
-                    sale /= 110;
-                    break;
-                case 2:
-                    sale /= 370;
-                    break;
-                default:
-                    sale /= 400;
+            Integer type = entity.getType();
+            if (type<4){
+                if (type%2 == 0){
+                    Integer a = sale/100;
+                    Integer b = sale/110;
+                    svVO.setNum(b+"~"+a);
+                }else{
+                    Integer a = sale/320;
+                    Integer b = sale/330;
+                    svVO.setNum(b+"~"+a);
+                }
+            }else{
+                if (type%2 == 0){
+                    Integer a = sale/40;
+                    Integer b = sale/45;
+                    svVO.setNum(b+"~"+a);
+                }else{
+                    Integer a = sale/370;
+                    Integer b = sale/380;
+                    svVO.setNum(b+"~"+a);
+                }
             }
-            svVO.setNum(sale);
+
+
             res.add(svVO);
         }
         return res;

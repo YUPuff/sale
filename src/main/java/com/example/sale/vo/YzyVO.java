@@ -6,7 +6,5 @@ import lombok.Data;
 @Data
 public class YzyVO extends YzyEntity {
 
-    private Integer b;
-
-    private Integer c;
+    private String cut;
 }
