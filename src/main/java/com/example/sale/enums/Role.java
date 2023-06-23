@@ -15,7 +15,9 @@ public enum Role {
 
     SV(3,"seventeen","SV"),
 
-    LS(4,"lessfirm","LS");
+    LS(4,"lessfirm","LS"),
+
+    EN1(5,"恩海盆1","EN1");
 
 
     private Integer code;

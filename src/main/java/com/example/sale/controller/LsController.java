@@ -1,14 +1,14 @@
 package com.example.sale.controller;
 
 import com.example.sale.common.Result;
+import com.example.sale.dto.CommonDTO;
 import com.example.sale.model.UserThreadLocal;
 import com.example.sale.vo.UserVO;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.sale.service.LsService;
 
@@ -24,6 +24,13 @@ public class LsController {
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         return Result.success(lsService.getData(userVO.getRole()==0 ? null : userVO.getTarget()));
+    }
+
+    @PostMapping("/edit")
+    @RequiresRoles(value = {"ADMIN"})
+    public Result edit(@Validated @RequestBody CommonDTO commonDTO){
+        lsService.edit(commonDTO);
+        return Result.success();
     }
 
 }

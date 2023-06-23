@@ -1,6 +1,10 @@
 package com.example.sale.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.sale.common.BusinessException;
+import com.example.sale.constant.ResultConstants;
+import com.example.sale.dto.CommonDTO;
+import com.example.sale.entity.LsEntity;
 import com.example.sale.entity.SrEntity;
 import com.example.sale.vo.SrVO;
 import com.example.sale.vo.SvVO;
@@ -19,7 +23,7 @@ import java.util.List;
 
 
 @Service("svService")
-public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvService {
+public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvService, ResultConstants {
 
     @Autowired
     private SvDao svDao;
@@ -59,5 +63,14 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
             res.add(svVO);
         }
         return res;
+    }
+
+    @Override
+    public void edit(CommonDTO commonDTO) {
+        SvEntity entity = svDao.selectById(commonDTO.getId());
+        if (entity == null)
+            throw new BusinessException(NOT_EXIST);
+        entity.setSale(commonDTO.getSale());
+        svDao.updateById(entity);
     }
 }

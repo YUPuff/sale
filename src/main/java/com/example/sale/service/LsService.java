@@ -1,11 +1,11 @@
 package com.example.sale.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.sale.dto.CommonDTO;
 import com.example.sale.entity.LsEntity;
 import com.example.sale.vo.LsVO;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author yilin
@@ -14,5 +14,7 @@ import java.util.Map;
 public interface LsService extends IService<LsEntity> {
 
     List<LsVO> getData(Integer target);
+
+    void edit(CommonDTO commonDTO);
 }
 

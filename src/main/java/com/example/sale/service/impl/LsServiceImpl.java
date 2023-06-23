@@ -1,6 +1,9 @@
 package com.example.sale.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.sale.common.BusinessException;
+import com.example.sale.constant.ResultConstants;
+import com.example.sale.dto.CommonDTO;
 import com.example.sale.entity.SvEntity;
 import com.example.sale.vo.LsVO;
 import com.example.sale.vo.SvVO;
@@ -19,7 +22,7 @@ import java.util.List;
 
 
 @Service("lsService")
-public class LsServiceImpl extends ServiceImpl<LsDao, LsEntity> implements LsService {
+public class LsServiceImpl extends ServiceImpl<LsDao, LsEntity> implements LsService, ResultConstants {
 
     @Autowired
     private LsDao lsDao;
@@ -32,8 +35,8 @@ public class LsServiceImpl extends ServiceImpl<LsDao, LsEntity> implements LsSer
             LsVO lsVO = new LsVO();
             BeanUtils.copyProperties(entity,lsVO);
             Integer sale = lsVO.getSale();
-            Integer a1 = sale/110;
-            Integer a2 = sale/100;
+            Integer a1 = sale/100;
+            Integer a2 = sale/95;
             Integer b1 = sale/330;
             Integer b2 = sale/320;
             lsVO.setA(a1+"~"+a2);
@@ -41,5 +44,14 @@ public class LsServiceImpl extends ServiceImpl<LsDao, LsEntity> implements LsSer
             res.add(lsVO);
         }
         return res;
+    }
+
+    @Override
+    public void edit(CommonDTO commonDTO) {
+        LsEntity entity = lsDao.selectById(commonDTO.getId());
+        if (entity == null)
+            throw new BusinessException(NOT_EXIST);
+        entity.setSale(commonDTO.getSale());
+        lsDao.updateById(entity);
     }
 }
