@@ -17,11 +17,4 @@ public class CommonDTO {
     @PositiveOrZero(message = "销量只能是不小于0的正整数")
     private Integer sale;
 
-    @NotNull(message = "小除数不能为空")
-    @Positive(message = "小除数只能是正整数")
-    private Integer small;
-
-    @NotNull(message = "大除数不能为空")
-    @Positive(message = "大除数只能是正整数")
-    private Integer big;
 }
