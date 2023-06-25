@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.sale.dao.SvDao">
+<mapper namespace="com.example.sale.dao.SkDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.example.sale.entity.SvEntity" id="svMap">
+    <resultMap type="com.example.sale.entity.SkEntity" id="skMap">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="sale" column="sale"/>
-        <result property="type" column="type"/>
+        <result property="stockVd" column="stock_vd"/>
+        <result property="stockKms" column="stock_kms"/>
+        <result property="totalVd" column="total_kms"/>
+        <result property="totalKms" column="total_kms"/>
         <result property="small" column="small"/>
         <result property="big" column="big"/>
     </resultMap>

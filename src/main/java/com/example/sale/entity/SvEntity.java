@@ -21,25 +21,33 @@ public class SvEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * id
 	 */
 	@TableId
-	@ApiModelProperty(value = "")
 	private Integer id;
+
 	/**
-	 * 
+	 * 标题
 	 */
-	@ApiModelProperty(value = "")
 	private String name;
+
 	/**
-	 * 
+	 * 销量
 	 */
-	@ApiModelProperty(value = "")
 	private Integer sale;
+
 	/**
-	 * 
+	 * 种类
 	 */
-	@ApiModelProperty(value = "")
 	private Integer type;
 
+	/**
+	 * 小除数
+	 */
+	private Integer small;
+
+	/**
+	 * 大除数
+	 */
+	private Integer big;
 }

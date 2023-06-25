@@ -4,9 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.sale.common.BusinessException;
 import com.example.sale.constant.ResultConstants;
 import com.example.sale.dto.CommonDTO;
-import com.example.sale.entity.LsEntity;
-import com.example.sale.entity.SrEntity;
-import com.example.sale.vo.SrVO;
 import com.example.sale.vo.SvVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,30 +33,30 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
             SvVO svVO = new SvVO();
             BeanUtils.copyProperties(entity,svVO);
             Integer sale = entity.getSale();
-            Integer type = entity.getType();
-            if (type<4){
-                if (type%2 == 0){
-                    Integer a = sale/100;
-                    Integer b = sale/110;
-                    svVO.setNum(b+"~"+a);
-                }else{
-                    Integer a = sale/320;
-                    Integer b = sale/330;
-                    svVO.setNum(b+"~"+a);
-                }
-            }else{
-                if (type%2 == 0){
-                    Integer a = sale/40;
-                    Integer b = sale/45;
-                    svVO.setNum(b+"~"+a);
-                }else{
-                    Integer a = sale/370;
-                    Integer b = sale/380;
-                    svVO.setNum(b+"~"+a);
-                }
-            }
-
-
+            Integer a = sale/entity.getBig();
+            Integer b = sale/entity.getSmall();
+            svVO.setNum(a+"~"+b);
+//            if (type<4){
+//                if (type%2 == 0){
+//                    Integer a = sale/100;
+//                    Integer b = sale/110;
+//                    svVO.setNum(b+"~"+a);
+//                }else{
+//                    Integer a = sale/320;
+//                    Integer b = sale/330;
+//                    svVO.setNum(b+"~"+a);
+//                }
+//            }else{
+//                if (type%2 == 0){
+//                    Integer a = sale/40;
+//                    Integer b = sale/45;
+//                    svVO.setNum(b+"~"+a);
+//                }else{
+//                    Integer a = sale/370;
+//                    Integer b = sale/380;
+//                    svVO.setNum(b+"~"+a);
+//                }
+//            }
             res.add(svVO);
         }
         return res;

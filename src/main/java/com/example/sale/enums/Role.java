@@ -9,7 +9,7 @@ public enum Role {
 
     ADMIN(0,"管理员","ADMIN"),
 
-    SR(1,"星河","SR"),
+    SK(1,"迷","SK"),
 
     YZY(2,"一直娱","YZY"),
 
