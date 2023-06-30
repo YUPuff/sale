@@ -15,6 +15,8 @@ public interface LsService extends IService<LsEntity> {
 
     List<LsVO> getData(Integer target);
 
+    List<LsVO> getData1(Integer role);
+
     void edit(CommonDTO commonDTO);
 }
 

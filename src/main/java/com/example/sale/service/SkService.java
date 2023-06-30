@@ -16,6 +16,8 @@ public interface SkService extends IService<SkEntity> {
 
     List<SkVO> getData(Integer target);
 
+    List<SkVO> getData1(Integer role);
+
     void edit(SkDTO skDTO);
 }
 

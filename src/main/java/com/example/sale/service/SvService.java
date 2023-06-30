@@ -16,6 +16,8 @@ public interface SvService extends IService<SvEntity> {
 
     List<SvVO> getData(Integer target);
 
+    List<SvVO> getData1(Integer role);
+
     void edit(CommonDTO commonDTO);
 }
 

@@ -24,10 +24,13 @@ public class SkController {
     private SkService skService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SK"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SK","SK1","SK2","SK3","SK4","SK5","SK6"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
-        return Result.success(skService.getData(userVO.getRole()==0 ? null : userVO.getTarget()));
+        Integer role = userVO.getRole();
+        if (role>5)
+            return Result.success(skService.getData1(role));
+        return Result.success(skService.getData(role==0 ? null : userVO.getTarget()));
     }
 
     @PostMapping("/edit")

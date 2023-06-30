@@ -9,6 +9,7 @@ import com.example.sale.vo.LsVO;
 import com.example.sale.vo.SvVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,6 +19,7 @@ import com.example.sale.entity.LsEntity;
 import com.example.sale.service.LsService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -32,16 +34,21 @@ public class LsServiceImpl extends ServiceImpl<LsDao, LsEntity> implements LsSer
         List<LsEntity> list = lsDao.selectList(new LambdaQueryWrapper<LsEntity>().eq(target!=null,LsEntity::getId,target));
         List<LsVO> res = new ArrayList<>();
         for(LsEntity entity:list){
-            LsVO lsVO = new LsVO();
-            BeanUtils.copyProperties(entity,lsVO);
-            Integer sale = lsVO.getSale();
-            Integer a1 = sale/100;
-            Integer a2 = sale/95;
-            Integer b1 = sale/330;
-            Integer b2 = sale/320;
-            lsVO.setA(a1+"~"+a2);
-            lsVO.setB(b1+"~"+b2);
-            res.add(lsVO);
+            res.add(generateVO(entity));
+        }
+        return res;
+    }
+
+    @Override
+    public List<LsVO> getData1(Integer role) {
+        List<Integer> ids = new ArrayList<>();
+        List<LsVO> res = new ArrayList<>();
+        if (role == 6){
+            ids = Arrays.asList(11);
+        }
+        for(Integer id:ids){
+            LsEntity entity = lsDao.selectById(id);
+            res.add(generateVO(entity));
         }
         return res;
     }
@@ -53,5 +60,15 @@ public class LsServiceImpl extends ServiceImpl<LsDao, LsEntity> implements LsSer
             throw new BusinessException(NOT_EXIST);
         entity.setSale(commonDTO.getSale());
         lsDao.updateById(entity);
+    }
+
+    private LsVO generateVO(LsEntity entity){
+        LsVO lsVO = new LsVO();
+        BeanUtils.copyProperties(entity,lsVO);
+        Integer sale = lsVO.getSale();
+        Integer a = sale/entity.getBig();
+        Integer b = sale/entity.getSmall();
+        lsVO.setCut(a+"~"+b);
+        return lsVO;
     }
 }

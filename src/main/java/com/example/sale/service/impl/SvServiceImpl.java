@@ -16,6 +16,7 @@ import com.example.sale.entity.SvEntity;
 import com.example.sale.service.SvService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -30,34 +31,21 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         List<SvEntity> list = svDao.selectList(new LambdaQueryWrapper<SvEntity>().eq(target!=null,SvEntity::getId,target));
         List<SvVO> res = new ArrayList<>();
         for(SvEntity entity:list){
-            SvVO svVO = new SvVO();
-            BeanUtils.copyProperties(entity,svVO);
-            Integer sale = entity.getSale();
-            Integer a = sale/entity.getBig();
-            Integer b = sale/entity.getSmall();
-            svVO.setNum(a+"~"+b);
-//            if (type<4){
-//                if (type%2 == 0){
-//                    Integer a = sale/100;
-//                    Integer b = sale/110;
-//                    svVO.setNum(b+"~"+a);
-//                }else{
-//                    Integer a = sale/320;
-//                    Integer b = sale/330;
-//                    svVO.setNum(b+"~"+a);
-//                }
-//            }else{
-//                if (type%2 == 0){
-//                    Integer a = sale/40;
-//                    Integer b = sale/45;
-//                    svVO.setNum(b+"~"+a);
-//                }else{
-//                    Integer a = sale/370;
-//                    Integer b = sale/380;
-//                    svVO.setNum(b+"~"+a);
-//                }
-//            }
-            res.add(svVO);
+            res.add(generateVO(entity));
+        }
+        return res;
+    }
+
+    @Override
+    public List<SvVO> getData1(Integer role) {
+        List<Integer> ids = new ArrayList<>();
+        List<SvVO> res = new ArrayList<>();
+        if (role == 10){
+            ids = Arrays.asList(5,7);
+        }
+        for (Integer id:ids) {
+            SvEntity entity = svDao.selectById(id);
+            res.add(generateVO(entity));
         }
         return res;
     }
@@ -69,5 +57,15 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
             throw new BusinessException(NOT_EXIST);
         entity.setSale(commonDTO.getSale());
         svDao.updateById(entity);
+    }
+
+    private SvVO generateVO(SvEntity entity){
+        SvVO svVO = new SvVO();
+        BeanUtils.copyProperties(entity,svVO);
+        Integer sale = entity.getSale();
+        Integer a = sale/entity.getBig();
+        Integer b = sale/entity.getSmall();
+        svVO.setNum(a+"~"+b);
+        return svVO;
     }
 }

@@ -48,15 +48,18 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
     @Override
     public List<YzyVO> getData1(Integer role) {
         List<YzyVO> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         if (role == 5){
-            List<Integer> list = Arrays.asList(8,9,10,11,13);
-            for (Integer id : list) {
-                YzyEntity entity = yzyDao.selectById(id);
-                YzyVO yzyVO = new YzyVO();
-                BeanUtils.copyProperties(entity,yzyVO);
-                yzyVO.setCut(generateCut(entity.getType(),entity.getSale()));
-                res.add(yzyVO);
-            }
+            list = Arrays.asList(8,9,10,11,13);
+        }else if (role == 9){
+            list = Arrays.asList(13);
+        }
+        for (Integer id : list) {
+            YzyEntity entity = yzyDao.selectById(id);
+            YzyVO yzyVO = new YzyVO();
+            BeanUtils.copyProperties(entity,yzyVO);
+            yzyVO.setCut(generateCut(entity.getType(),entity.getSale()));
+            res.add(yzyVO);
         }
         return res;
     }

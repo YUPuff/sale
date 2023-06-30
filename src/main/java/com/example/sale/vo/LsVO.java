@@ -11,7 +11,5 @@ public class LsVO {
 
     private Integer sale;
 
-    private String a;
-
-    private String b;
+    private String cut;
 }

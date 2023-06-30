@@ -18,22 +18,17 @@ import lombok.Data;
 public class LsEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
 	@TableId
 	private Integer id;
 	/**
 	 * 名字
 	 */
 	private String name;
-	/**
-	 * 销量
-	 */
+
 	private Integer sale;
-	/**
-	 * 
-	 */
-	private Integer type;
+
+	private Integer small;
+
+	private Integer big;
 
 }

@@ -20,10 +20,13 @@ public class LsController {
     private LsService lsService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","LS"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","LS","SK1"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
-        return Result.success(lsService.getData(userVO.getRole()==0 ? null : userVO.getTarget()));
+        Integer role = userVO.getRole();
+        if (role == 6)
+            return Result.success(lsService.getData1(role));
+        return Result.success(lsService.getData(role==0 ? null : userVO.getTarget()));
     }
 
     @PostMapping("/edit")
