@@ -34,9 +34,8 @@ public class YzyEntity implements Serializable {
 	 */
 	private Integer sale;
 
-	/**
-	 * 种类
-	 */
-	private Integer type;
+	private Integer small;
+
+	private Integer big;
 
 }

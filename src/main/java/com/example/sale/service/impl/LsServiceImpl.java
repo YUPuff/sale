@@ -43,8 +43,15 @@ public class LsServiceImpl extends ServiceImpl<LsDao, LsEntity> implements LsSer
     public List<LsVO> getData1(Integer role) {
         List<Integer> ids = new ArrayList<>();
         List<LsVO> res = new ArrayList<>();
-        if (role == 6){
-            ids = Arrays.asList(11);
+        switch (role){
+            case 6:
+                ids = Arrays.asList(11);
+                break;
+            case 9:
+                ids = Arrays.asList(8,10,13,14);
+                break;
+            default:
+                ids = Arrays.asList(9);
         }
         for(Integer id:ids){
             LsEntity entity = lsDao.selectById(id);

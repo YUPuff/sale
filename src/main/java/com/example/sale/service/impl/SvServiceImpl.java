@@ -40,8 +40,8 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
     public List<SvVO> getData1(Integer role) {
         List<Integer> ids = new ArrayList<>();
         List<SvVO> res = new ArrayList<>();
-        if (role == 10){
-            ids = Arrays.asList(5,7);
+        if (role == 8){
+            ids = Arrays.asList(9,10,11);
         }
         for (Integer id:ids) {
             SvEntity entity = svDao.selectById(id);

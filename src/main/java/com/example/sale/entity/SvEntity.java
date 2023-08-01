@@ -36,10 +36,6 @@ public class SvEntity implements Serializable {
 	 */
 	private Integer sale;
 
-	/**
-	 * 种类
-	 */
-	private Integer type;
 
 	/**
 	 * 小除数

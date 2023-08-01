@@ -17,7 +17,7 @@ public enum Role {
 
     LS(4,"lessfirm","LS"),
 
-    EN1(5,"恩海盆1","EN1"),
+    IM(5,"im","IM"),
 
     SK1(6,"sk1","SK1"),
 
@@ -29,7 +29,11 @@ public enum Role {
 
     SK5(10,"sk5","SK5"),
 
-    SK6(11,"sk6","SK6");
+    SK6(11,"sk6","SK6"),
+
+    SK7(12,"sk7","SK7"),
+
+    DINO(13,"dino","DINO");
 
 
     private Integer code;

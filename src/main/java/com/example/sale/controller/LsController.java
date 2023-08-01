@@ -20,11 +20,11 @@ public class LsController {
     private LsService lsService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","LS","SK1"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","LS"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         Integer role = userVO.getRole();
-        if (role == 6)
+        if (role == 6 || role>=9)
             return Result.success(lsService.getData1(role));
         return Result.success(lsService.getData(role==0 ? null : userVO.getTarget()));
     }

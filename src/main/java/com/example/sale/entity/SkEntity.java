@@ -32,15 +32,15 @@ public class SkEntity implements Serializable {
 	@ApiModelProperty(value = "名字")
 	private String name;
 	/**
-	 * 微店库存
+	 * 微店销量
 	 */
-	@ApiModelProperty(value = "微店库存")
-	private Integer stockVd;
+	@ApiModelProperty(value = "微店销量")
+	private Integer saleVd;
 	/**
-	 * KMS库存
+	 * KMS销量
 	 */
-	@ApiModelProperty(value = "KMS库存")
-	private Integer stockKms;
+	@ApiModelProperty(value = "KMS销量")
+	private Integer saleKms;
 	/**
 	 * 小除数
 	 */
@@ -52,15 +52,5 @@ public class SkEntity implements Serializable {
 	@ApiModelProperty(value = "大除数")
 	private Integer big;
 
-	/**
-	 * 微店总量
-	 */
-	@ApiModelProperty(value = "微店总量")
-	private Integer totalVd;
-	/**
-	 * KMS总量
-	 */
-	@ApiModelProperty(value = "KMS总量")
-	private Integer totalKms;
 
 }

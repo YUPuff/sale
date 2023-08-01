@@ -42,23 +42,11 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
         List<Integer> ids = new ArrayList<>();
         List<SkVO> res = new ArrayList<>();
         switch (role){
-            case 6:
-                ids = Arrays.asList(4,5);
-                break;
-            case 7:
-                ids = Arrays.asList(3);
-                break;
-            case 8:
-                ids = Arrays.asList(5,6);
-                break;
             case 9:
-                ids = Arrays.asList(2,7);
-                break;
-            case 10:
-                ids = Arrays.asList(3);
+                ids = Arrays.asList(9);
                 break;
             default:
-                ids = Arrays.asList(2,8);
+                ids = Arrays.asList(10);
         }
         for (Integer id : ids) {
             SkEntity entity = skDao.selectById(id);
@@ -73,19 +61,15 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
         SkEntity entity = skDao.selectById(skDTO.getId());
         if (entity == null)
             throw new BusinessException(NOT_EXIST);
-        entity.setStockVd(skDTO.getStockVd());
-        entity.setStockKms(skDTO.getStockKms());
+        entity.setSaleVd(skDTO.getSaleVd());
+        entity.setSaleKms(skDTO.getSaleKms());
         skDao.updateById(entity);
     }
 
     private SkVO generateVO(SkEntity entity){
         SkVO skVO = new SkVO();
         BeanUtils.copyProperties(entity,skVO);
-        Integer saleVd = entity.getTotalVd()-entity.getStockVd();
-        Integer saleKms = entity.getTotalKms()-entity.getStockKms();
-        Integer total = saleVd+saleKms;
-        skVO.setSaleVd(saleVd);
-        skVO.setSaleKms(saleKms);
+        Integer total = entity.getSaleVd()+entity.getSaleKms();
         skVO.setSaleTotal(total);
         Integer a = total/entity.getBig();
         Integer b = total/entity.getSmall();

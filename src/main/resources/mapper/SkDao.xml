@@ -7,10 +7,8 @@
     <resultMap type="com.example.sale.entity.SkEntity" id="skMap">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="stockVd" column="stock_vd"/>
-        <result property="stockKms" column="stock_kms"/>
-        <result property="totalVd" column="total_kms"/>
-        <result property="totalKms" column="total_kms"/>
+        <result property="saleVd" column="sale_vd"/>
+        <result property="saleKms" column="sale_kms"/>
         <result property="small" column="small"/>
         <result property="big" column="big"/>
     </resultMap>
