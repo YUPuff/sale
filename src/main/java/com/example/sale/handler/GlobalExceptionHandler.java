@@ -3,6 +3,7 @@ package com.example.sale.handler;
 
 import com.example.sale.common.BusinessException;
 import com.example.sale.common.Result;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,12 +37,22 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 捕捉授权异常
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(AuthorizationException.class)
+    public Result authorizationExceptionHandler(Exception exception){
+        return Result.failure("您暂时无法查看此页内容");
+    }
+
+    /**
      * 捕捉全局异常
      * @param exception
      * @return
      */
     @ExceptionHandler(Exception.class)
     public Result exceptionHandler(Exception exception){
-        return Result.failure("您暂时无法查看此页内容");
+        return Result.failure("无数据");
     }
 }

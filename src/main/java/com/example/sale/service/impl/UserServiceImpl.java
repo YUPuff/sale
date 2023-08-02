@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.sale.common.BusinessException;
 import com.example.sale.constant.RedisConstants;
+import com.example.sale.dto.DataDTO;
 import com.example.sale.dto.UserDTO;
 import com.example.sale.model.Person;
 import com.example.sale.utils.JWTUtils;
+import com.example.sale.vo.DataVO;
 import com.example.sale.vo.UserVO;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -102,6 +104,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         }
         return res;
     }
+
+
 
     private void generateToken(UserVO userVO){
         String token = JWTUtils.sign(userVO.getId());

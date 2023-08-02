@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.sale.common.BusinessException;
 import com.example.sale.constant.ResultConstants;
 import com.example.sale.dto.CommonDTO;
+import com.example.sale.model.UserThreadLocal;
 import com.example.sale.vo.SvVO;
+import com.example.sale.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,8 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         List<SvVO> res = new ArrayList<>();
         if (role == 8){
             ids = Arrays.asList(9,10,11);
+        }else if(role == 9){
+            ids = Arrays.asList(11);
         }
         for (Integer id:ids) {
             SvEntity entity = svDao.selectById(id);
@@ -63,6 +67,8 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         SvVO svVO = new SvVO();
         BeanUtils.copyProperties(entity,svVO);
         Integer sale = entity.getSale();
+        if (entity.getId() == 11 && UserThreadLocal.get().getRole() != 0)
+            svVO.setSale(0);
         Integer a = sale/entity.getBig();
         Integer b = sale/entity.getSmall();
         svVO.setNum(a+"~"+b);

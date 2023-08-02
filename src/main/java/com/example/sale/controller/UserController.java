@@ -4,7 +4,9 @@ package com.example.sale.controller;
 
 import com.example.sale.annotation.NoAuth;
 import com.example.sale.common.Result;
+import com.example.sale.dto.DataDTO;
 import com.example.sale.dto.UserDTO;
+import com.example.sale.service.DataService;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DataService dataService;
 
     @PostMapping("/login")
     @NoAuth
@@ -47,5 +52,11 @@ public class UserController {
     @RequiresRoles(value = {"ADMIN"})
     public Result getData(){
         return Result.success(userService.getData());
+    }
+
+    @RequestMapping("/getData1")
+    @RequiresRoles(value = {"ADMIN"})
+    public Result getData1(DataDTO dataDTO){
+        return Result.success(dataService.getData(dataDTO));
     }
 }
