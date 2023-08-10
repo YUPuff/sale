@@ -1,7 +1,10 @@
 package com.example.sale;
 
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Calendar;
 
 
 @SpringBootTest
@@ -69,6 +72,13 @@ class OdeApplicationTests {
 //        for (RecommendedItem recommendedItem : recommend) {
 //            System.out.println(recommendedItem);
 //        }
+//    }
+
+//    @Test
+//    public void test(){
+//        Calendar calendar = Calendar.getInstance();
+//        int today = calendar.get(Calendar.DAY_OF_MONTH);
+//        System.out.println(today);
 //    }
 
 }

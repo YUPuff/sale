@@ -8,6 +8,7 @@ import com.example.sale.model.Person;
 import com.example.sale.vo.DataVO;
 import com.example.sale.vo.UserVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -16,13 +17,15 @@ import java.util.List;
  */
 public interface UserService extends IService<UserEntity> {
 
-    UserVO login(UserDTO userDTO);
+    UserVO login(UserDTO userDTO, HttpServletRequest request);
 
     UserVO getUserByToken(String token);
 
     void logout(String token);
 
-    List<Person> getData();
+    List<Person> getDataVd();
+
+    List<Person> getDataKMS();
 
 }
 

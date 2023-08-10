@@ -24,7 +24,7 @@ public class SkController {
     private SkService skService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SK","SK4"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SK"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         Integer role = userVO.getRole();

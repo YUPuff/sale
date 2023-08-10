@@ -17,7 +17,7 @@ public enum Role {
 
     LS(4,"lessfirm","LS"),
 
-    IM(5,"im","IM"),
+    ND(5,"nd","ND"),
 
     SK1(6,"sk1","SK1"),
 

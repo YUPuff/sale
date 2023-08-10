@@ -23,7 +23,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
         //判断请求的请求头是否带上 "Token"
-        System.out.println("在JWTFILTER 的isAccessAllowed");
+//        System.out.println("在JWTFILTER 的isAccessAllowed");
         if (isLoginAttempt(request, response)) {
             //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
             try {
@@ -44,7 +44,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        System.out.println("JWTFILTER 判断用户是否想要登录 isLoginAttempt");
+//        System.out.println("JWTFILTER 判断用户是否想要登录 isLoginAttempt");
         HttpServletRequest req = (HttpServletRequest) request;
         String token = req.getHeader("token");
         return token != null;
@@ -55,7 +55,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        System.out.println("在JWTUTIL执行登录操作 executeLogin");
+//        System.out.println("在JWTUTIL执行登录操作 executeLogin");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String token = httpServletRequest.getHeader("token");
         JWTToken jwtToken = new JWTToken(token);
@@ -70,7 +70,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        System.out.println("JWTFILTER 预处理prehandle");
+//        System.out.println("JWTFILTER 预处理prehandle");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));

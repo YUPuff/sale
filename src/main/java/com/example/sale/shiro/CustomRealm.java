@@ -33,7 +33,7 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     public boolean supports(AuthenticationToken token) {
-        System.out.println("进入了CustomRealm 中的supports，判断当前拿到的token是不是自定义的token类型");
+//        System.out.println("进入了CustomRealm 中的supports，判断当前拿到的token是不是自定义的token类型");
         return token instanceof JWTToken;
     }
 
@@ -42,8 +42,8 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("CustomRealm中的————身份认证方法————");
-        System.out.println("从authenticationToken中拿到Token并解密");
+//        System.out.println("CustomRealm中的————身份认证方法————");
+//        System.out.println("从authenticationToken中拿到Token并解密");
         String token = (String) authenticationToken.getCredentials();
         if (!JWTUtils.verify(token)) {
             throw new AuthenticationException("token认证失败！");
@@ -60,13 +60,13 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        System.out.println("CustomRealm中的————权限认证————");
+//        System.out.println("CustomRealm中的————权限认证————");
         Long id = JWTUtils.getId(principals.toString());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获得该用户角色
         UserEntity user = userService.getById(id);
         String role = Role.format(user.getRole());
-        System.out.println("角色："+role);
+//        System.out.println("角色："+role);
         Set<String> roleSet = new HashSet<>();
         //需要将 role, permission 封装到 Set 作为 info.setRoles()的参数
         roleSet.add(role);

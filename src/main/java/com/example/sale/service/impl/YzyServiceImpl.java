@@ -52,7 +52,7 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
         }else if (role == 6){
             list = Arrays.asList(52,53,54,55,56,57);
         }else if (role == 7){
-            list = Arrays.asList(52,54,56,58);
+            list = Arrays.asList(52,53,54);
         }
         for (Integer id : list) {
             YzyEntity entity = yzyDao.selectById(id);
@@ -79,26 +79,5 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
         yzyVO.setCut(a+"~"+b);
         return yzyVO;
     }
-//    private String generateCut(Integer type,Integer sale){
-//        Integer a = 0;
-//        Integer b = 0;
-//        switch (type){
-//            case 0:
-//                a = sale/45;
-//                b = sale/40;
-//                break;
-//            case 1:
-//                a = sale/48;
-//                b = sale/45;
-//                break;
-//            case 2:
-//                a = sale/70;
-//                b = sale/60;
-//                break;
-//            default:
-//                a = sale/30;
-//                b = sale/25;
-//        }
-//        return a+"~"+b;
-//    }
+
 }

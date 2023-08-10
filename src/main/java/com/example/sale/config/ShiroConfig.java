@@ -26,7 +26,7 @@ public class ShiroConfig {
      */
     @Bean
     public ShiroFilterFactoryBean factory(SecurityManager securityManager) {
-        System.out.println("在ShiroConfig里面的过滤器工厂了");
+//        System.out.println("在ShiroConfig里面的过滤器工厂了");
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
 
         // 添加自己的过滤器并且取名为jwt

@@ -2,7 +2,9 @@ package com.example.sale.utils;
 
 
 import com.example.sale.dao.DataDao;
+import com.example.sale.dao.DataKmsDao;
 import com.example.sale.entity.DataEntity;
+import com.example.sale.entity.DataKmsEntity;
 import com.example.sale.model.Person;
 import com.example.sale.service.DataService;
 import com.example.sale.service.UserService;
@@ -17,13 +19,14 @@ import java.util.List;
 @Component
 public class JobUtils {
 
-    private static final Integer TIME = 10*60*1000;
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private DataDao dataDao;
+
+    @Autowired
+    private DataKmsDao dataKmsDao;
 
     /**
      * fixedRate：每间隔2秒执行一次任务
@@ -33,11 +36,21 @@ public class JobUtils {
      */
     @Scheduled(fixedDelay = 600000)
     public void task0() {
-        List<Person> data = userService.getData();
+        List<Person> data = userService.getDataVd();
         for (Person person:data){
             DataEntity entity = new DataEntity();
             BeanUtils.copyProperties(person,entity);
             dataDao.insert(entity);
+        }
+    }
+
+    @Scheduled(fixedDelay = 600000)
+    public void task1() {
+        List<Person> data = userService.getDataKMS();
+        for (Person person:data){
+            DataKmsEntity entity = new DataKmsEntity();
+            BeanUtils.copyProperties(person,entity);
+            dataKmsDao.insert(entity);
         }
     }
 }

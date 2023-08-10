@@ -7,12 +7,14 @@ import com.example.sale.common.Result;
 import com.example.sale.dto.DataDTO;
 import com.example.sale.dto.UserDTO;
 import com.example.sale.service.DataService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.sale.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -20,6 +22,7 @@ import com.example.sale.service.UserService;
  * @date 2023-06-19 15:50:56
  */
 @RestController
+@Slf4j
 @RequestMapping("user")
 @CrossOrigin
 public class UserController {
@@ -30,10 +33,12 @@ public class UserController {
     @Autowired
     private DataService dataService;
 
+
     @PostMapping("/login")
     @NoAuth
-    public Result login(@RequestBody UserDTO userDTO){
-        return Result.success(userService.login(userDTO));
+    public Result login(@RequestBody UserDTO userDTO,HttpServletRequest request){
+
+        return Result.success(userService.login(userDTO,request));
     }
 
     @GetMapping("/info")
@@ -48,15 +53,27 @@ public class UserController {
         return Result.success();
     }
 
-    @RequestMapping("/getData")
+    @RequestMapping("/getDataVd")
     @RequiresRoles(value = {"ADMIN"})
-    public Result getData(){
-        return Result.success(userService.getData());
+    public Result getDataVd(){
+        return Result.success(userService.getDataVd());
     }
 
-    @RequestMapping("/getData1")
+    @RequestMapping("/getDataKMS")
     @RequiresRoles(value = {"ADMIN"})
-    public Result getData1(DataDTO dataDTO){
-        return Result.success(dataService.getData(dataDTO));
+    public Result getDataKMS(){
+        return Result.success(userService.getDataKMS());
+    }
+
+    @RequestMapping("/getCountVd")
+    @RequiresRoles(value = {"ADMIN"})
+    public Result getCountVd(DataDTO dataDTO){
+        return Result.success(dataService.getDataVd(dataDTO));
+    }
+
+    @RequestMapping("/getCountKMS")
+    @RequiresRoles(value = {"ADMIN"})
+    public Result getCountKMS(DataDTO dataDTO){
+        return Result.success(dataService.getDataKMS(dataDTO));
     }
 }

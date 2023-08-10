@@ -43,9 +43,11 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         List<Integer> ids = new ArrayList<>();
         List<SvVO> res = new ArrayList<>();
         if (role == 8){
-            ids = Arrays.asList(9,10,11);
-        }else if(role == 9){
-            ids = Arrays.asList(11);
+            ids = Arrays.asList(18,19,20);
+        }else if (role == 9){
+            ids = Arrays.asList(15);
+        }else if (role == 5){
+            ids = Arrays.asList(15,16);
         }
         for (Integer id:ids) {
             SvEntity entity = svDao.selectById(id);
@@ -67,7 +69,7 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         SvVO svVO = new SvVO();
         BeanUtils.copyProperties(entity,svVO);
         Integer sale = entity.getSale();
-        if (entity.getId() == 11 && UserThreadLocal.get().getRole() != 0)
+        if ((entity.getId() == 17 || entity.getId() == 20) && UserThreadLocal.get().getRole() != 0)
             svVO.setSale(0);
         Integer a = sale/entity.getBig();
         Integer b = sale/entity.getSmall();

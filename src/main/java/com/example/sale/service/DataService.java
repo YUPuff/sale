@@ -14,7 +14,9 @@ import java.util.Map;
  */
 public interface DataService extends IService<DataEntity> {
 
-    List<DataVO> getData(DataDTO dataDTO);
+    List<DataVO> getDataVd(DataDTO dataDTO);
+
+    List<DataVO> getDataKMS(DataDTO dataDTO);
 
 }
 
