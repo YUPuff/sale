@@ -65,7 +65,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         } catch (Exception e) {
             throw new BusinessException("获取ip归属地信息失败！");
         }
-        if ("Chongqing".equals(ipDTO.getRegionName()) && name.startsWith("nd"))
+        if (("Chongqing".equals(ipDTO.getRegionName()) && name.startsWith("nd")) && !name.equals("nd-ps1")||
+                ("Henan".equals(ipDTO.getRegionName()) && name.equals("nd-qp")))
             throw new BusinessException("无法访问，请联系管理员！");
         logDao.insert(new LogEntity(name,ip,ipDTO.generateRegion()));
         UserVO userVO = new UserVO();

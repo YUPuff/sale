@@ -107,7 +107,7 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .eq("name",name)
                     .ge("time",start)
                     .le("time",end)
-                    .select("stock"));
+                    .select("distinct stock"));
             map.put("date","8月"+i+"号");
             map.put("起始",data.size()>1 ? data.get(0) : null);
             map.put("末尾",data.size()>1 ? data.get(data.size()-1) : null);
@@ -130,7 +130,7 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .eq("name",name)
                     .ge("time",start)
                     .le("time",end)
-                    .select("stock"));
+                    .select("distinct stock"));
             map.put("date","8月"+i+"号");
             map.put("起始",data.size()>1 ? data.get(0) : null);
             map.put("末尾",data.size()>1 ? data.get(data.size()-1) : null);
@@ -140,28 +140,71 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
         dataVO.setHistory(list);
     }
 
+//    private void generateChange(DataVO dataVO){
+//        List<Object> stocks = dataVO.getStocks();
+//        Map<String,Integer> map = new HashMap<>();
+//        Integer pre = (stocks.size() == 0 ? null : Integer.parseInt(stocks.get(0).toString()));
+//        for (int i=1;i<stocks.size();i++){
+//            Integer curr = Integer.parseInt(stocks.get(i).toString());
+//            Integer interval = pre-curr;
+//            pre = curr;
+//            String key = "超过300";
+//            if (interval<=0)
+//                continue;
+//            else if (interval<21){
+//                key = "1~20";
+//            }else if (interval<51){
+//                key = "21~50";
+//            }else if (interval<71){
+//                key = "51~70";
+//            }else if (interval<101){
+//                key = "71~100";
+//            }else if (interval<121){
+//                key = "101~120";
+//            }else if (interval<151){
+//                key = "121~150";
+//            }else if (interval<171){
+//                key = "151~170";
+//            }else if (interval<201){
+//                key = "171~200";
+//            }else if (interval<301){
+//                key = "201~300";
+//            }
+//            map.put(key,map.getOrDefault(key,0)+1);
+//        }
+//        dataVO.setChange(map);
+//    }
     private void generateChange(DataVO dataVO){
         List<Object> stocks = dataVO.getStocks();
-        Map<String,Integer> map = new HashMap<>();
+        int[] change = dataVO.getChange();
         Integer pre = (stocks.size() == 0 ? null : Integer.parseInt(stocks.get(0).toString()));
         for (int i=1;i<stocks.size();i++){
             Integer curr = Integer.parseInt(stocks.get(i).toString());
             Integer interval = pre-curr;
             pre = curr;
-            String key = "超过100";
             if (interval<=0)
                 continue;
             else if (interval<21){
-                key = "1~20";
+                change[0]++;
             }else if (interval<51){
-                key = "21~50";
+                change[1]++;
             }else if (interval<71){
-                key = "51~70";
+                change[2]++;
             }else if (interval<101){
-                key = "71~100";
+                change[3]++;
+            }else if (interval<121){
+                change[4]++;
+            }else if (interval<151){
+                change[5]++;
+            }else if (interval<171){
+                change[6]++;
+            }else if (interval<201){
+                change[7]++;
+            }else if (interval<301){
+                change[8]++;
+            }else{
+                change[9]++;
             }
-            map.put(key,map.getOrDefault(key,0)+1);
         }
-        dataVO.setChange(map);
     }
 }
