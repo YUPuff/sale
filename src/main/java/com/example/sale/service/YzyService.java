@@ -19,5 +19,7 @@ public interface YzyService extends IService<YzyEntity> {
     List<YzyVO> getData1(Integer role);
 
     void edit(CommonDTO commonDTO);
+
+    String getYao();
 }
 

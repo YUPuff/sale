@@ -65,9 +65,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         } catch (Exception e) {
             throw new BusinessException("获取ip归属地信息失败！");
         }
-        if (("Chongqing".equals(ipDTO.getRegionName()) && name.startsWith("nd")) && !name.equals("nd-ps1")||
-                ("Henan".equals(ipDTO.getRegionName()) && name.equals("nd-qp")))
-            throw new BusinessException("无法访问，请联系管理员！");
+//        if ("jj1323".equals(name))
+//            throw new BusinessException("检测到您多IP登陆，账号已被锁定，请联系管理员！");
         logDao.insert(new LogEntity(name,ip,ipDTO.generateRegion()));
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user,userVO);
@@ -91,14 +90,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     @Override
     public List<Person> getDataVd() {
         List<Person> res = new ArrayList<>();
-        List<String> urls = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226537108792%22%7D&wdtoken=29fefbac&_=1691586031586"
-                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226537205772%22%7D&wdtoken=29fefbac&_=1691586998110"
-                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226536135851%22%7D&wdtoken=29fefbac&_=1691586113415"
-                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226537101032%22%7D&wdtoken=29fefbac&_=1691586151613"
-                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226536133889%22%7D&wdtoken=29fefbac&_=1691586365092"
-                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226536094189%22%7D&wdtoken=29fefbac&_=1691586390049"
-                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226537110684%22%7D&wdtoken=29fefbac&_=1691586491887");
-        List<String> names = Arrays.asList("钟辰乐","罗渽民","黄仁俊","李马克","朴志晟","李帝努","李楷灿");
+        List<String> urls = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226613808946%22%7D&wdtoken=53ea95ad&_=1694523591913",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226612713549%22%7D&wdtoken=53ea95ad&_=1694523780197",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226612770265%22%7D&wdtoken=53ea95ad&_=1694523823816",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226613879742%22%7D&wdtoken=53ea95ad&_=1694523688940");
+        List<String> names = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
         for (int i=0;i<names.size();i++) {
             String name = names.get(i);
             String url = urls.get(i);
@@ -130,14 +126,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     @Override
     public List<Person> getDataKMS() {
         List<Person> res = new ArrayList<>();
-        List<String> urls = Arrays.asList("https://kms.kmstation.net/prod/prodInfo?prodId=2781"
-                ,"https://kms.kmstation.net/prod/prodInfo?prodId=2782"
-                ,"https://kms.kmstation.net/prod/prodInfo?prodId=2778"
-                ,"https://kms.kmstation.net/prod/prodInfo?prodId=2783"
-                ,"https://kms.kmstation.net/prod/prodInfo?prodId=2784"
-                ,"https://kms.kmstation.net/prod/prodInfo?prodId=2779"
-                ,"https://kms.kmstation.net/prod/prodInfo?prodId=2780");
-        List<String> names = Arrays.asList("钟辰乐","罗渽民","黄仁俊","李马克","朴志晟","李帝努","李楷灿");
+        List<String> urls = Arrays.asList("https://kms.kmstation.net/prod/prodInfo?prodId=2812",
+                "https://kms.kmstation.net/prod/prodInfo?prodId=2815",
+                "https://kms.kmstation.net/prod/prodInfo?prodId=2813",
+                "https://kms.kmstation.net/prod/prodInfo?prodId=2814");
+        List<String> names = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
         for (int i=0;i<names.size();i++) {
             String name = names.get(i);
             String url = urls.get(i);

@@ -9,11 +9,7 @@ public class SkVO {
 
     private String name;
 
-    private Integer saleVd;
-
-    private Integer saleKms;
-
-    private Integer saleTotal;
+    private Integer sale;
 
     private String cut;
 

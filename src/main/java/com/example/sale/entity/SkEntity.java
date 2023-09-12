@@ -8,7 +8,9 @@ import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yilin
@@ -17,6 +19,8 @@ import lombok.Data;
 @Data
 @TableName("t_sk")
 @ApiModel(value = "Sk对象")
+@NoArgsConstructor
+@AllArgsConstructor
 public class SkEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,15 +36,15 @@ public class SkEntity implements Serializable {
 	@ApiModelProperty(value = "名字")
 	private String name;
 	/**
-	 * 微店销量
+	 * 当前库存
 	 */
-	@ApiModelProperty(value = "微店销量")
-	private Integer saleVd;
+	@ApiModelProperty(value = "库存")
+	private Integer stock;
 	/**
-	 * KMS销量
+	 * 总库存
 	 */
-	@ApiModelProperty(value = "KMS销量")
-	private Integer saleKms;
+	@ApiModelProperty(value = "总库存")
+	private Integer stockTotal;
 	/**
 	 * 小除数
 	 */
@@ -52,5 +56,8 @@ public class SkEntity implements Serializable {
 	@ApiModelProperty(value = "大除数")
 	private Integer big;
 
-
+	public SkEntity(Integer id, Integer stock) {
+		this.id = id;
+		this.stock = stock;
+	}
 }

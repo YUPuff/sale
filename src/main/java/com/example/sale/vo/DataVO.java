@@ -4,6 +4,7 @@ package com.example.sale.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,13 +17,16 @@ public class DataVO {
 
 //    private Map<String,Integer> change;
 
-    private int[] change;
+//    private int[] change;
+
+    private List<Integer> change;
 
     private List<Map<String,Object>> history;
 
     public DataVO(String name, List<Object> stocks) {
         this.name = name;
         this.stocks = stocks;
-        this.change = new int[10];
+        this.change = new ArrayList<>();
+//        this.change = new int[10];
     }
 }

@@ -15,15 +15,15 @@ public enum Role {
 
     SV(3,"seventeen","SV"),
 
-    LS(4,"lessfirm","LS"),
+    IT1(4,"it1","IT1"),
 
-    ND(5,"nd","ND"),
+    IT2(5,"it2","IT2"),
 
-    SK1(6,"sk1","SK1"),
+    IT3(6,"it3","IT3"),
 
-    SK2(7,"sk2","SK2"),
+    IT4(7,"it4","IT4"),
 
-    SK3(8,"sk3","SK3"),
+    IT5(8,"it5","IT5"),
 
     SK4(9,"sk4","SK4"),
 

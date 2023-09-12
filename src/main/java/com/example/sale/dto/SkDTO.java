@@ -13,13 +13,10 @@ public class SkDTO {
     @NotNull(message = "id不能为空")
     private Integer id;
 
-    @NotNull(message = "微店销量不能为空")
-    @PositiveOrZero(message = "微店销量只能是不小于0的正整数")
-    private Integer saleVd;
+    @NotNull(message = "库存不能为空")
+    @PositiveOrZero(message = "库存只能是不小于0的正整数")
+    private Integer stock;
 
-    @NotNull(message = "KMS销量不能为空")
-    @PositiveOrZero(message = "KMS销量只能是不小于0的正整数")
-    private Integer saleKms;
 
 
 }

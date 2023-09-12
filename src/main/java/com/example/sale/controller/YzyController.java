@@ -28,7 +28,7 @@ public class YzyController {
     private YzyService yzyService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","YZY","DINO","IM","SK4","SK1","SK2"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","YZY","DINO","SK5","SK4"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         Integer role = userVO.getRole();
@@ -44,5 +44,9 @@ public class YzyController {
         return Result.success();
     }
 
-
+    @GetMapping("/getYao")
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN"})
+    public Result getYao(){
+        return Result.success(yzyService.getYao());
+    }
 }

@@ -32,7 +32,7 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
 
     @Override
     public List<DataVO> getDataVd(DataDTO dataDTO) {
-        List<String> names = Arrays.asList("钟辰乐","罗渽民","黄仁俊","李马克","朴志晟","李帝努","李楷灿");
+        List<String> names = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
         List<DataVO> res = new ArrayList<>();
         // 获取用户输入的时间段
         String user_start = dataDTO.getStart();
@@ -64,7 +64,7 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
 
     @Override
     public List<DataVO> getDataKMS(DataDTO dataDTO) {
-        List<String> names = Arrays.asList("钟辰乐","罗渽民","黄仁俊","李马克","朴志晟","李帝努","李楷灿");
+        List<String> names = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
         List<DataVO> res = new ArrayList<>();
         // 获取用户输入的时间段
         String user_start = dataDTO.getStart();
@@ -97,8 +97,8 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private void generateHistoryVd(DataVO dataVO,Calendar calendar,String name){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.add(Calendar.DATE, -(today-9));
-        for (int i=9;i<today;i++){
+        calendar.add(Calendar.DATE, -(today-12));
+        for (int i=12;i<today;i++){
             Map<String,Object> map = new HashMap<>();
             String day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String start = day + " 00:00:00";
@@ -108,7 +108,7 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-            map.put("date","8月"+i+"号");
+            map.put("date","9月"+i+"号");
             map.put("起始",data.size()>1 ? data.get(0) : null);
             map.put("末尾",data.size()>1 ? data.get(data.size()-1) : null);
             list.add(map);
@@ -120,8 +120,8 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private void generateHistoryKMS(DataVO dataVO,Calendar calendar,String name){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.add(Calendar.DATE, -(today-9));
-        for (int i=9;i<today;i++){
+        calendar.add(Calendar.DATE, -(today-12));
+        for (int i=12;i<today;i++){
             Map<String,Object> map = new HashMap<>();
             String day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String start = day + " 00:00:00";
@@ -131,7 +131,7 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-            map.put("date","8月"+i+"号");
+            map.put("date","9月"+i+"号");
             map.put("起始",data.size()>1 ? data.get(0) : null);
             map.put("末尾",data.size()>1 ? data.get(data.size()-1) : null);
             list.add(map);
@@ -176,35 +176,36 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
 //    }
     private void generateChange(DataVO dataVO){
         List<Object> stocks = dataVO.getStocks();
-        int[] change = dataVO.getChange();
+        List<Integer> change = dataVO.getChange();
         Integer pre = (stocks.size() == 0 ? null : Integer.parseInt(stocks.get(0).toString()));
         for (int i=1;i<stocks.size();i++){
             Integer curr = Integer.parseInt(stocks.get(i).toString());
-            Integer interval = pre-curr;
+            Integer interval = curr-pre;
+            change.add(interval);
             pre = curr;
-            if (interval<=0)
-                continue;
-            else if (interval<21){
-                change[0]++;
-            }else if (interval<51){
-                change[1]++;
-            }else if (interval<71){
-                change[2]++;
-            }else if (interval<101){
-                change[3]++;
-            }else if (interval<121){
-                change[4]++;
-            }else if (interval<151){
-                change[5]++;
-            }else if (interval<171){
-                change[6]++;
-            }else if (interval<201){
-                change[7]++;
-            }else if (interval<301){
-                change[8]++;
-            }else{
-                change[9]++;
-            }
+//            if (interval<=0)
+//                continue;
+//            else if (interval<21){
+//                change[0]++;
+//            }else if (interval<51){
+//                change[1]++;
+//            }else if (interval<71){
+//                change[2]++;
+//            }else if (interval<101){
+//                change[3]++;
+//            }else if (interval<121){
+//                change[4]++;
+//            }else if (interval<151){
+//                change[5]++;
+//            }else if (interval<171){
+//                change[6]++;
+//            }else if (interval<201){
+//                change[7]++;
+//            }else if (interval<301){
+//                change[8]++;
+//            }else{
+//                change[9]++;
+//            }
         }
     }
 }

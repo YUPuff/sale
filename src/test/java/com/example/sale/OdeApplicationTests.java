@@ -1,15 +1,28 @@
 package com.example.sale;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.sale.dao.SkDao;
+import com.example.sale.entity.SkEntity;
+import com.example.sale.service.SkService;
+import com.example.sale.service.impl.SkServiceImpl;
+import com.example.sale.vo.SkVO;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Calendar;
+import java.util.List;
 
 
 @SpringBootTest
 class OdeApplicationTests {
 
+    @Autowired
+    private SkService skService;
+
+    @Autowired
+    private SkDao skDao;
 
 //    @Test
 //    void recommend(){
@@ -68,7 +81,8 @@ class OdeApplicationTests {
 //        // 4. 根据生成器创建通用推荐引擎，参数为false表示无偏好值
 //        MyRecommender.CommonRecommender commonRecommender = userBaseRecommender.getCommonRecommender(false);
 //        // 5. 生成推荐
-//        List<RecommendedItem> recommend = commonRecommender.recommend(2L, 10);
+//        List<RecommendedItem>
+//        recommend = commonRecommender.recommend(2L, 10);
 //        for (RecommendedItem recommendedItem : recommend) {
 //            System.out.println(recommendedItem);
 //        }
@@ -76,9 +90,10 @@ class OdeApplicationTests {
 
 //    @Test
 //    public void test(){
-//        Calendar calendar = Calendar.getInstance();
-//        int today = calendar.get(Calendar.DAY_OF_MONTH);
-//        System.out.println(today);
+//        List<SkVO> data = skService.getData(null);
+//        for (SkVO datum : data) {
+//            System.out.println(datum);
+//        }
 //    }
 
 }

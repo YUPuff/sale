@@ -10,6 +10,7 @@
         <result property="sale" column="sale"/>
         <result property="small" column="small"/>
         <result property="big" column="big"/>
+        <result property="isDel" column="is_del"/>
     </resultMap>
 
 
