@@ -31,8 +31,7 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private DataKmsDao dataKmsDao;
 
     @Override
-    public List<DataVO> getDataVd(DataDTO dataDTO) {
-        List<String> names = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
+    public List<DataVO> getDataVd(DataDTO dataDTO,List<String> names,Integer begin) {
         List<DataVO> res = new ArrayList<>();
         // 获取用户输入的时间段
         String user_start = dataDTO.getStart();
@@ -56,15 +55,14 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .select("distinct stock"));
             DataVO dataVO = new DataVO(name,data);
             generateChange(dataVO);
-            generateHistoryVd(dataVO,calendar,name);
+            generateHistoryVd(dataVO,calendar,name,begin);
             res.add(dataVO);
         }
         return res;
     }
 
     @Override
-    public List<DataVO> getDataKMS(DataDTO dataDTO) {
-        List<String> names = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
+    public List<DataVO> getDataKMS(DataDTO dataDTO,List<String> names,Integer begin) {
         List<DataVO> res = new ArrayList<>();
         // 获取用户输入的时间段
         String user_start = dataDTO.getStart();
@@ -88,17 +86,17 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .select("distinct stock"));
             DataVO dataVO = new DataVO(name,data);
             generateChange(dataVO);
-            generateHistoryKMS(dataVO,calendar,name);
+            generateHistoryKMS(dataVO,calendar,name,begin);
             res.add(dataVO);
         }
         return res;
     }
 
-    private void generateHistoryVd(DataVO dataVO,Calendar calendar,String name){
+    private void generateHistoryVd(DataVO dataVO,Calendar calendar,String name,Integer begin){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.add(Calendar.DATE, -(today-12));
-        for (int i=12;i<today;i++){
+        calendar.add(Calendar.DATE, -(today-begin));
+        for (int i=begin;i<today;i++){
             Map<String,Object> map = new HashMap<>();
             String day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String start = day + " 00:00:00";
@@ -117,11 +115,11 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
         dataVO.setHistory(list);
     }
 
-    private void generateHistoryKMS(DataVO dataVO,Calendar calendar,String name){
+    private void generateHistoryKMS(DataVO dataVO,Calendar calendar,String name,Integer begin){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.add(Calendar.DATE, -(today-12));
-        for (int i=12;i<today;i++){
+        calendar.add(Calendar.DATE, -(today-begin));
+        for (int i=begin;i<today;i++){
             Map<String,Object> map = new HashMap<>();
             String day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String start = day + " 00:00:00";
@@ -140,40 +138,6 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
         dataVO.setHistory(list);
     }
 
-//    private void generateChange(DataVO dataVO){
-//        List<Object> stocks = dataVO.getStocks();
-//        Map<String,Integer> map = new HashMap<>();
-//        Integer pre = (stocks.size() == 0 ? null : Integer.parseInt(stocks.get(0).toString()));
-//        for (int i=1;i<stocks.size();i++){
-//            Integer curr = Integer.parseInt(stocks.get(i).toString());
-//            Integer interval = pre-curr;
-//            pre = curr;
-//            String key = "超过300";
-//            if (interval<=0)
-//                continue;
-//            else if (interval<21){
-//                key = "1~20";
-//            }else if (interval<51){
-//                key = "21~50";
-//            }else if (interval<71){
-//                key = "51~70";
-//            }else if (interval<101){
-//                key = "71~100";
-//            }else if (interval<121){
-//                key = "101~120";
-//            }else if (interval<151){
-//                key = "121~150";
-//            }else if (interval<171){
-//                key = "151~170";
-//            }else if (interval<201){
-//                key = "171~200";
-//            }else if (interval<301){
-//                key = "201~300";
-//            }
-//            map.put(key,map.getOrDefault(key,0)+1);
-//        }
-//        dataVO.setChange(map);
-//    }
     private void generateChange(DataVO dataVO){
         List<Object> stocks = dataVO.getStocks();
         List<Integer> change = dataVO.getChange();

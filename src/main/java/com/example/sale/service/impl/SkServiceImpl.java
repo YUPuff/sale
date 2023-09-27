@@ -10,6 +10,7 @@ import com.example.sale.model.Person;
 import com.example.sale.vo.SkVO;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,9 +38,7 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
 
     @Override
     public List<SkVO> getData(Integer target) {
-        updateData1();
-        updateData2();
-        updateData3();
+        updateData();
         List<SkEntity> list = skDao.selectList(new LambdaQueryWrapper<SkEntity>().eq(target!=null,SkEntity::getId,target));
         List<SkVO> res = new ArrayList<>();
         for (SkEntity entity:list){
@@ -59,29 +58,15 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
 
     @Override
     public List<SkVO> getData1(Integer role) {
-        updateData1();
-        updateData2();
-        updateData3();
+        updateData();
         List<Integer> ids = new ArrayList<>();
         List<SkVO> res = new ArrayList<>();
         switch (role){
             case 4:
-                ids = Arrays.asList(20,26,31);
-                break;
-            case 5:
-                ids = Arrays.asList(21,30,32);
-                break;
-            case 6:
-                ids = Arrays.asList(22,28,33);
-                break;
-            case 7:
-                ids = Arrays.asList(23,29);
-                break;
-            case 8:
-                ids = Arrays.asList(24,27);
+                ids = Arrays.asList(36,37);
                 break;
             default:
-                ids = Arrays.asList(10);
+                ids = Arrays.asList(38,39);
         }
         List<SkEntity> list = skDao.selectBatchIds(ids);
         return generateVO(list);
@@ -99,9 +84,6 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
 
     private List<SkVO> generateVO(List<SkEntity> list){
         List<SkVO> res = new ArrayList<>();
-        Integer sum = 0;
-        Integer small = 1;
-        Integer big = 1;
         for(SkEntity entity:list){
             SkVO skVO = new SkVO();
             BeanUtils.copyProperties(entity,skVO);
@@ -109,20 +91,68 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
             Integer stock = entity.getStock();
             Integer sale = stockTotal-stock;
             skVO.setSale(sale);
-            sum += sale;
+            Integer a = sale/entity.getBig();
+            Integer b = sale/entity.getSmall();
+            skVO.setCut(a+"~"+b);
             res.add(skVO);
-            small = entity.getSmall();
-            big = entity.getBig();
         }
-        // 统计总销量
-        SkVO skVO = new SkVO();
-        skVO.setName("总计");
-        skVO.setSale(sum);
-        Integer a = sum/big;
-        Integer b = sum/small;
-        skVO.setCut(a+"~"+b);
-        res.add(skVO);
         return res;
+    }
+
+    public void updateData(){
+        String url = "https://api.whosfan.com.cn/api.php";
+        HttpClient httpClient = new HttpClient();
+        PostMethod postMethod = new PostMethod(url);
+        postMethod.addRequestHeader("Referer", "https://whosfan.com.cn/");
+        postMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36");
+        // 添加请求头
+        // 存储响应字符串并转化成json对象
+        String res_str = "";
+        JSONObject res_obj = null;
+        try {
+            int code = httpClient.executeMethod(postMethod);
+            if (code == 200){
+                List<SkEntity> list = skDao.selectList(new LambdaQueryWrapper<>());
+                // 表为空
+                if (list.size() == 0)
+                    throw new BusinessException("此表无数据");
+                // 获取开始的id
+                Integer count = 0;
+                // 处理响应结果
+                res_str = postMethod.getResponseBodyAsString();
+                res_obj = JSON.parseObject(res_str);
+                Map<String,Object> data = (Map<String, Object>) res_obj.get("data");
+                // 修改总销量
+                List<Map<String,Object>> dataList = (List<Map<String, Object>>) data.get("data_list");
+                List<Map<String,Object>> goods = (List<Map<String, Object>>) dataList.get(0).get("goods");
+                for (int i=0;i<2;i++){
+                    Map<String, Object> item = goods.get(i);
+                    SkEntity entity1 = list.get(i);
+                    SkEntity entity2 = list.get(i+2);
+                    Integer stock = Integer.parseInt(item.get("inventory").toString());
+                    entity1.setStock(stock);
+                    entity2.setStock(stock);
+                    skDao.updateById(entity1);
+                    skDao.updateById(entity2);
+                }
+
+//                SkEntity entity = list.get(count++);
+//                entity.setStock(itemStock);
+//                skDao.updateById(entity);
+//                // 修改单人销量
+//                List<Map<String,Object>> skuInfos = (List<Map<String, Object>>) result.get("skuInfos");
+//                for (int i=0;i<5;i++){
+//                    Map<String, Object> map = skuInfos.get(i);
+//                    Map<String,Object> skuInfo = (Map<String, Object>) map.get("skuInfo");
+//                    Integer stock = Integer.parseInt(skuInfo.get("stock").toString());
+//                    entity = list.get(count++);
+//                    entity.setStock(stock);
+//                    skDao.updateById(entity);
+//                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateData1(){

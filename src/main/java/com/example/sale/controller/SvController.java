@@ -22,11 +22,11 @@ public class SvController {
     private SvService svService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SV","SK3","SK4","SK6"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SV","SK4","SK6","SK5","IT1"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         Integer role = userVO.getRole();
-        if (role >= 5)
+        if (role >= 4)
             return Result.success(svService.getData1(role));
         return Result.success(svService.getData(role==0 ? null : userVO.getTarget()));
     }

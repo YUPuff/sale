@@ -2,9 +2,12 @@ package com.example.sale;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.sale.constant.GroupConstants;
 import com.example.sale.dao.SkDao;
 import com.example.sale.entity.SkEntity;
+import com.example.sale.model.Person;
 import com.example.sale.service.SkService;
+import com.example.sale.service.UserService;
 import com.example.sale.service.impl.SkServiceImpl;
 import com.example.sale.vo.SkVO;
 import org.junit.jupiter.api.Test;
@@ -19,10 +22,13 @@ import java.util.List;
 class OdeApplicationTests {
 
     @Autowired
-    private SkService skService;
+    private UserService userService;
 
     @Autowired
     private SkDao skDao;
+
+    @Autowired
+    private SkServiceImpl skService;
 
 //    @Test
 //    void recommend(){
@@ -90,10 +96,7 @@ class OdeApplicationTests {
 
 //    @Test
 //    public void test(){
-//        List<SkVO> data = skService.getData(null);
-//        for (SkVO datum : data) {
-//            System.out.println(datum);
-//        }
+//        skService.updateData();
 //    }
 
 }

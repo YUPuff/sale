@@ -57,17 +57,17 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         if (!userDTO.getPassword().equals(user.getPassword()))
             throw new BusinessException("密码错误");
 
-        // 获取IP地址
-        String ip = IpUtils.getIpAddr(request);
-        IpDTO ipDTO = null;
-        try {
-            ipDTO = IpUtils.getRegion(ip);
-        } catch (Exception e) {
-            throw new BusinessException("获取ip归属地信息失败！");
-        }
-//        if ("jj1323".equals(name))
-//            throw new BusinessException("检测到您多IP登陆，账号已被锁定，请联系管理员！");
-        logDao.insert(new LogEntity(name,ip,ipDTO.generateRegion()));
+//        // 获取IP地址
+//        String ip = IpUtils.getIpAddr(request);
+//        IpDTO ipDTO = null;
+//        try {
+//            ipDTO = IpUtils.getRegion(ip);
+//        } catch (Exception e) {
+//            throw new BusinessException("获取ip归属地信息失败！");
+//        }
+////        if ("jj1323".equals(name))
+////            throw new BusinessException("检测到您多IP登陆，账号已被锁定，请联系管理员！");
+//        logDao.insert(new LogEntity(name,ip,ipDTO.generateRegion()));
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user,userVO);
         userVO.setName(name);
@@ -88,13 +88,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     }
 
     @Override
-    public List<Person> getDataVd() {
+    public List<Person> getDataVd(List<String> urls,List<String> names) {
         List<Person> res = new ArrayList<>();
-        List<String> urls = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226613808946%22%7D&wdtoken=53ea95ad&_=1694523591913",
-                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226612713549%22%7D&wdtoken=53ea95ad&_=1694523780197",
-                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226612770265%22%7D&wdtoken=53ea95ad&_=1694523823816",
-                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226613879742%22%7D&wdtoken=53ea95ad&_=1694523688940");
-        List<String> names = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
         for (int i=0;i<names.size();i++) {
             String name = names.get(i);
             String url = urls.get(i);
@@ -124,13 +119,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 
 
     @Override
-    public List<Person> getDataKMS() {
+    public List<Person> getDataKMS(List<String> urls,List<String> names) {
         List<Person> res = new ArrayList<>();
-        List<String> urls = Arrays.asList("https://kms.kmstation.net/prod/prodInfo?prodId=2812",
-                "https://kms.kmstation.net/prod/prodInfo?prodId=2815",
-                "https://kms.kmstation.net/prod/prodInfo?prodId=2813",
-                "https://kms.kmstation.net/prod/prodInfo?prodId=2814");
-        List<String> names = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
+
         for (int i=0;i<names.size();i++) {
             String name = names.get(i);
             String url = urls.get(i);
@@ -139,6 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
             // 添加请求头
             getMethod.addRequestHeader("Referer", "http://page.kmstation.net/");
             getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+            getMethod.addRequestHeader("Content-Type", "application/json;charset=UTF-8");
             // 存储响应字符串并转化成json对象
             String res_str = "";
             JSONObject res_obj = null;

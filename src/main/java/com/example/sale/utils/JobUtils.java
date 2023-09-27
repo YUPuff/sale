@@ -1,6 +1,7 @@
 package com.example.sale.utils;
 
 
+import com.example.sale.constant.GroupConstants;
 import com.example.sale.dao.DataDao;
 import com.example.sale.dao.DataKmsDao;
 import com.example.sale.entity.DataEntity;
@@ -34,23 +35,43 @@ public class JobUtils {
      * fixedDelay：每次延时2秒执行一次任务
      * 注意，这里是等待上次任务执行结束后，再延时固定时间后开始下次任务
      */
-    @Scheduled(fixedDelay = 600000)
-    public void task0() {
-        List<Person> data = userService.getDataVd();
-        for (Person person:data){
-            DataEntity entity = new DataEntity();
-            BeanUtils.copyProperties(person,entity);
-            dataDao.insert(entity);
-        }
-    }
+//    @Scheduled(fixedDelay = 600000)
+//    public void task0() {
+//        List<Person> data = userService.getDataVd(GroupConstants.urls_aespa_vd,GroupConstants.names_aespa);
+//        for (Person person:data){
+//            DataEntity entity = new DataEntity();
+//            BeanUtils.copyProperties(person,entity);
+//            dataDao.insert(entity);
+//        }
+//    }
+//
+//    @Scheduled(fixedDelay = 600000)
+//    public void task1() {
+//        List<Person> data = userService.getDataKMS(GroupConstants.urls_aespa_kms,GroupConstants.names_aespa);
+//        for (Person person:data){
+//            DataKmsEntity entity = new DataKmsEntity();
+//            BeanUtils.copyProperties(person,entity);
+//            dataKmsDao.insert(entity);
+//        }
+//    }
 
-    @Scheduled(fixedDelay = 600000)
-    public void task1() {
-        List<Person> data = userService.getDataKMS();
-        for (Person person:data){
-            DataKmsEntity entity = new DataKmsEntity();
-            BeanUtils.copyProperties(person,entity);
-            dataKmsDao.insert(entity);
-        }
-    }
+//    @Scheduled(fixedDelay = 300000)
+//    public void task2() {
+//        List<Person> data = userService.getDataVd(GroupConstants.urls_riize_vd,GroupConstants.names_riize);
+//        for (Person person:data){
+//            DataEntity entity = new DataEntity();
+//            BeanUtils.copyProperties(person,entity);
+//            dataDao.insert(entity);
+//        }
+//    }
+//
+//    @Scheduled(fixedDelay = 300000)
+//    public void task3() {
+//        List<Person> data = userService.getDataKMS(GroupConstants.urls_riize_kms,GroupConstants.names_riize);
+//        for (Person person:data){
+//            DataKmsEntity entity = new DataKmsEntity();
+//            BeanUtils.copyProperties(person,entity);
+//            dataKmsDao.insert(entity);
+//        }
+//    }
 }

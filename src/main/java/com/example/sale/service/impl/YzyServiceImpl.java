@@ -7,6 +7,7 @@ import com.example.sale.common.BusinessException;
 import com.example.sale.constant.ResultConstants;
 import com.example.sale.dto.CommonDTO;
 import com.example.sale.model.Person;
+import com.example.sale.model.UserThreadLocal;
 import com.example.sale.vo.YzyVO;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -53,9 +54,9 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
         List<YzyVO> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
         if (role == 10){
-            list = Arrays.asList(87,88);
+            list = Arrays.asList(99);
         }else if (role == 9){
-            list = Arrays.asList(87);
+            list = Arrays.asList(103,105);
         }
         for (Integer id : list) {
             YzyEntity entity = yzyDao.selectById(id);
@@ -76,12 +77,12 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
     @Override
     public String getYao() {
         String res = "null";
-        String url = "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226606325439%22%7D&wdtoken=ac3965bf&_=1694358206687";
+        String url = "https://h5.youzan.com/wscgoods/tee-app/detail-v2.json?1005=undefined&activityId=&activityType=&alg=&alias=2737ekcfldnfwig&banner_id=~image_ad.1~0~GvVb8ChM&bizEnv=wsc&card_type=0&client=weapp&dc_ps=&from_uuid=en6QBIhcKg0Lieh1694777941294&fullPresaleSupportCart=true&img_ps=20%257C&isGoodsWeappNative=1&is_share=1&kdt_id=127635340&mpVersion=2.149.8&platform=weixin&scene=1005&share_from=weappCard&shopAutoEnter=1&subKdtId=0&umpAlias=&umpType=&withoutSkuDirectOrder=1&ump_alias=&ump_type=&oid=0&isDetailPrefetch=1%20HTTP/1.1";
         HttpClient httpClient = new HttpClient();
         GetMethod getMethod = new GetMethod(url);
         // 添加请求头
-        getMethod.addRequestHeader("Referer", "https://shop1723959802.v.weidian.com/");
-        getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+        getMethod.addRequestHeader("Referer", "https://servicewechat.com/wx360cd2418640589a/11/page-frame.html");
+        getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/8391");
         // 存储响应字符串并转化成json对象
         String res_str = "";
         JSONObject res_obj = null;
@@ -90,8 +91,9 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
             if (code == 200){
                 res_str = getMethod.getResponseBodyAsString();
                 res_obj = JSON.parseObject(res_str);
-                Map<String,Object> result = (Map<String, Object>) res_obj.get("result");
-                res = result.get("itemStock").toString();
+                Map<String,Object> data = (Map<String, Object>) res_obj.get("data");
+                Map<String,Object> spuStock = (Map<String, Object>) data.get("spuStock");
+                res = spuStock.get("stockNum").toString();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -103,6 +105,8 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
         YzyVO yzyVO = new YzyVO();
         BeanUtils.copyProperties(entity,yzyVO);
         Integer sale = yzyVO.getSale();
+//        if ((entity.getId() == 100 || entity.getId() == 102) && UserThreadLocal.get().getRole() != 0)
+//            yzyVO.setSale(0);
         Integer a = sale/entity.getBig();
         Integer b = sale/entity.getSmall();
         yzyVO.setCut(a+"~"+b);

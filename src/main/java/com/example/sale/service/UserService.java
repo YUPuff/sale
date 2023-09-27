@@ -23,9 +23,9 @@ public interface UserService extends IService<UserEntity> {
 
     void logout(String token);
 
-    List<Person> getDataVd();
+    List<Person> getDataVd(List<String> urls,List<String> names);
 
-    List<Person> getDataKMS();
+    List<Person> getDataKMS(List<String> urls,List<String> names);
 
 }
 
