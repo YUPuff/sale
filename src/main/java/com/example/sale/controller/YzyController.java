@@ -28,7 +28,7 @@ public class YzyController {
     private YzyService yzyService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","YZY","DINO","SK5","SK4"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","YZY","DINO","SK5","SK4","IT2","ZB1","BROWN"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         Integer role = userVO.getRole();

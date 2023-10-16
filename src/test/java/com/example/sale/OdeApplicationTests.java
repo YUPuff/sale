@@ -96,7 +96,10 @@ class OdeApplicationTests {
 
 //    @Test
 //    public void test(){
-//        skService.updateData();
+//        List<Person> data = userService.getDataVd(GroupConstants.urls_nct_vd,GroupConstants.names_nct);
+//        for (Person person:data){
+//            System.out.println(person);
+//        }
 //    }
 
 }

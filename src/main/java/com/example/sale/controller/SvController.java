@@ -4,6 +4,7 @@ package com.example.sale.controller;
 
 import com.example.sale.common.Result;
 import com.example.sale.dto.CommonDTO;
+import com.example.sale.dto.FourDTO;
 import com.example.sale.model.UserThreadLocal;
 import com.example.sale.vo.UserVO;
 import org.apache.shiro.authz.annotation.Logical;
@@ -22,7 +23,7 @@ public class SvController {
     private SvService svService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SV","SK4","SK6","SK5","IT1"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SV","IT1"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         Integer role = userVO.getRole();
@@ -42,5 +43,11 @@ public class SvController {
     @RequiresRoles(value = {"ADMIN"})
     public Result info(@PathVariable("id")Integer id){
         return Result.success(svService.getById(id));
+    }
+
+    @PostMapping("/count")
+    @RequiresRoles(value = {"ADMIN"})
+    public Result count(@Validated @RequestBody FourDTO fourDTO){
+        return Result.success(svService.countFour(fourDTO));
     }
 }

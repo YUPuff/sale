@@ -19,21 +19,25 @@ public enum Role {
 
     IT2(5,"it2","IT2"),
 
-    IT3(6,"it3","IT3"),
+    ZB1(6,"zb1","ZB1"),
 
-    IT4(7,"it4","IT4"),
+    BROWN(7,"brown","BROWN"),
 
-    IT5(8,"it5","IT5"),
+    NCT1(8,"nct1","NCT1"),
 
     SK4(9,"sk4","SK4"),
 
     SK5(10,"sk5","SK5"),
 
-    SK6(11,"sk6","SK6"),
+    NCT2(11,"nct2","NCT2"),
 
-    SK7(12,"sk7","SK7"),
+    NCT3(12,"nct3","NCT3"),
 
-    DINO(13,"dino","DINO");
+    DINO(13,"dino","DINO"),
+
+    NCT4(14,"nct4","NCT4"),
+
+    NCT5(15,"nct5","NCT5");
 
 
     private Integer code;

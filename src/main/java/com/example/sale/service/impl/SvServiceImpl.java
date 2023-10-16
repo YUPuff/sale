@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.sale.common.BusinessException;
 import com.example.sale.constant.ResultConstants;
 import com.example.sale.dto.CommonDTO;
+import com.example.sale.dto.FourDTO;
 import com.example.sale.model.UserThreadLocal;
 import com.example.sale.vo.SvVO;
+import com.example.sale.vo.ThreeVO;
 import com.example.sale.vo.UserVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,9 +45,10 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
     public List<SvVO> getData1(Integer role) {
         List<Integer> ids = new ArrayList<>();
         List<SvVO> res = new ArrayList<>();
-        if (role == 9){
-//            ids = Arrays.asList(25,26,27,28,29,30,31);
+        if (role == 4){
+            ids = Arrays.asList(52,53);
         }
+
         for (Integer id:ids) {
             SvEntity entity = svDao.selectById(id);
             res.add(generateVO(entity));
@@ -60,6 +64,34 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         entity.setSale(commonDTO.getSale());
         svDao.updateById(entity);
     }
+
+    @Override
+    public List<ThreeVO> countFour(FourDTO fourDTO) {
+        List<ThreeVO> res = new ArrayList<>();
+        String a = fourDTO.getVd1();
+        String b = fourDTO.getVd2();
+        String d = fourDTO.getKms1();
+        String e = fourDTO.getKms2();
+//        if (StringUtils.isBlank(a) || StringUtils.isBlank(b) || StringUtils.isBlank(d) || StringUtils.isBlank(e))
+//            throw new BusinessException("四项都不能为空！");
+        String[] aa = a.split("\n");
+        String[] bb = b.split("\n");
+        String[] dd = d.split("\n");
+        String[] ee = e.split("\n");
+        if (!(aa.length == bb.length && bb.length == dd.length && dd.length == ee.length))
+            throw new BusinessException("四项数字个数不一致！");
+        for (int i=0;i<aa.length;i++){
+            Integer A = Integer.parseInt(aa[i]);
+            Integer B = Integer.parseInt(bb[i]);
+            Integer D = Integer.parseInt(dd[i]);
+            Integer E = Integer.parseInt(ee[i]);
+            Integer AB = A-B;
+            Integer DE = D-E;
+            res.add(new ThreeVO(i+1,AB,DE,AB+DE));
+        }
+        return res;
+    }
+
 
     private SvVO generateVO(SvEntity entity){
         SvVO svVO = new SvVO();

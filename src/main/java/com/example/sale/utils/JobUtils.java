@@ -8,6 +8,7 @@ import com.example.sale.entity.DataEntity;
 import com.example.sale.entity.DataKmsEntity;
 import com.example.sale.model.Person;
 import com.example.sale.service.DataService;
+import com.example.sale.service.SkService;
 import com.example.sale.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,31 +30,43 @@ public class JobUtils {
     @Autowired
     private DataKmsDao dataKmsDao;
 
+    @Autowired
+    private SkService skService;
+
     /**
      * fixedRate：每间隔2秒执行一次任务
      * 注意，默认情况下定时任务是在同一线程同步执行的，如果任务的执行时间（如5秒）大于间隔时间，则会等待任务执行结束后直接开始下次任务
      * fixedDelay：每次延时2秒执行一次任务
      * 注意，这里是等待上次任务执行结束后，再延时固定时间后开始下次任务
      */
-//    @Scheduled(fixedDelay = 600000)
+//    @Scheduled(fixedDelay = 60000)
 //    public void task0() {
-//        List<Person> data = userService.getDataVd(GroupConstants.urls_aespa_vd,GroupConstants.names_aespa);
+//        List<Person> data = skService.updateData();
 //        for (Person person:data){
 //            DataEntity entity = new DataEntity();
 //            BeanUtils.copyProperties(person,entity);
 //            dataDao.insert(entity);
 //        }
 //    }
-//
-//    @Scheduled(fixedDelay = 600000)
-//    public void task1() {
-//        List<Person> data = userService.getDataKMS(GroupConstants.urls_aespa_kms,GroupConstants.names_aespa);
-//        for (Person person:data){
-//            DataKmsEntity entity = new DataKmsEntity();
-//            BeanUtils.copyProperties(person,entity);
-//            dataKmsDao.insert(entity);
-//        }
-//    }
+    @Scheduled(fixedDelay = 60000)
+    public void task0() {
+        List<Person> data = userService.getDataVd(GroupConstants.urls_ive_vd,GroupConstants.names_ive);
+        for (Person person:data){
+            DataEntity entity = new DataEntity();
+            BeanUtils.copyProperties(person,entity);
+            dataDao.insert(entity);
+        }
+    }
+
+    @Scheduled(fixedDelay = 60000)
+    public void task1() {
+        List<Person> data = userService.getDataKMS(GroupConstants.urls_ive_kms,GroupConstants.names_ive);
+        for (Person person:data){
+            DataKmsEntity entity = new DataKmsEntity();
+            BeanUtils.copyProperties(person,entity);
+            dataKmsDao.insert(entity);
+        }
+    }
 
 //    @Scheduled(fixedDelay = 300000)
 //    public void task2() {

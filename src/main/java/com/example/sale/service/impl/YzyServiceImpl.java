@@ -56,8 +56,13 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
         if (role == 10){
             list = Arrays.asList(99);
         }else if (role == 9){
-            list = Arrays.asList(103,105);
+            list = Arrays.asList(99,112,113);
+        }else if (role == 6){
+            list = Arrays.asList(112,113);
+        }else if (role == 7){
+            list = Arrays.asList(101,102);
         }
+
         for (Integer id : list) {
             YzyEntity entity = yzyDao.selectById(id);
             res.add(generateVO(entity));

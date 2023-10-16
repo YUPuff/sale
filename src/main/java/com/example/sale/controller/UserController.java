@@ -8,6 +8,7 @@ import com.example.sale.constant.GroupConstants;
 import com.example.sale.dto.DataDTO;
 import com.example.sale.dto.UserDTO;
 import com.example.sale.service.DataService;
+import com.example.sale.service.SkService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.example.sale.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -34,6 +36,9 @@ public class UserController {
 
     @Autowired
     private DataService dataService;
+
+    @Autowired
+    private SkService skService;
 
 
     @PostMapping("/login")
@@ -58,51 +63,42 @@ public class UserController {
     @RequestMapping("/getDataVd")
     @RequiresRoles(value = {"ADMIN"})
     public Result getDataVd(){
-        return Result.success(userService.getDataVd(GroupConstants.urls_aespa_vd,GroupConstants.names_aespa));
+        return Result.success(userService.getDataVd(GroupConstants.urls_ive_vd,GroupConstants.names_ive));
+//        return Result.success(skService.updateData());
     }
 
     @RequestMapping("/getDataKMS")
     @RequiresRoles(value = {"ADMIN"})
     public Result getDataKMS(){
-        return Result.success(userService.getDataKMS(GroupConstants.urls_aespa_kms,GroupConstants.names_aespa));
+        return Result.success(userService.getDataKMS(GroupConstants.urls_ive_kms,GroupConstants.names_ive));
     }
 
     @RequestMapping("/getCountVd")
     @RequiresRoles(value = {"ADMIN"})
     public Result getCountVd(DataDTO dataDTO){
-        return Result.success(dataService.getDataVd(dataDTO,GroupConstants.names_aespa,12));
+        return Result.success(dataService.getDataVd(dataDTO,GroupConstants.names_ive,16));
+//        List<String> names = Arrays.asList("单人拍照/拍手","团体拍照/签售");
+//        return Result.success(dataService.getDataVd(dataDTO,names,5));
     }
 
     @RequestMapping("/getCountKMS")
     @RequiresRoles(value = {"ADMIN"})
     public Result getCountKMS(DataDTO dataDTO){
-        return Result.success(dataService.getDataKMS(dataDTO,GroupConstants.names_aespa,12));
+        return Result.success(dataService.getDataKMS(dataDTO,GroupConstants.names_ive,16));
     }
 
-
-
-
-    @RequestMapping("/getDataVd2")
+    @RequestMapping("/searchVd")
     @RequiresRoles(value = {"ADMIN"})
-    public Result getDataVd2(){
-        return Result.success(userService.getDataVd(GroupConstants.urls_riize_vd,GroupConstants.names_riize));
+    public Result searchVd(DataDTO dataDTO){
+
+        return Result.success(dataService.searchVd(dataDTO));
+//        List<String> names = Arrays.asList("单人拍照/拍手","团体拍照/签售");
+//        return Result.success(dataService.getDataVd(dataDTO,names,5));
     }
 
-    @RequestMapping("/getDataKMS2")
+    @RequestMapping("/searchKMS")
     @RequiresRoles(value = {"ADMIN"})
-    public Result getDataKMS2(){
-        return Result.success(userService.getDataKMS(GroupConstants.urls_riize_kms,GroupConstants.names_riize));
-    }
-
-    @RequestMapping("/getCountVd2")
-    @RequiresRoles(value = {"ADMIN"})
-    public Result getCountVd2(DataDTO dataDTO){
-        return Result.success(dataService.getDataVd(dataDTO,GroupConstants.names_riize,13));
-    }
-
-    @RequestMapping("/getCountKMS2")
-    @RequiresRoles(value = {"ADMIN"})
-    public Result getCountKMS2(DataDTO dataDTO){
-        return Result.success(dataService.getDataKMS(dataDTO,GroupConstants.names_riize,13));
+    public Result searchKMS(DataDTO dataDTO){
+        return Result.success(dataService.searchKMS(dataDTO));
     }
 }

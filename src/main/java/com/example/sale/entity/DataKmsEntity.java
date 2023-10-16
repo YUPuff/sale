@@ -1,6 +1,7 @@
 package com.example.sale.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -34,6 +35,7 @@ public class DataKmsEntity implements Serializable {
 	 * 添加时间
 	 */
 	@TableField(fill = FieldFill.INSERT)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date time;
 
 }

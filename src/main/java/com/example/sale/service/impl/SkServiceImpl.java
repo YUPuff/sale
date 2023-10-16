@@ -24,10 +24,7 @@ import com.example.sale.service.SkService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service("skService")
@@ -38,7 +35,7 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
 
     @Override
     public List<SkVO> getData(Integer target) {
-        updateData();
+//        updateData1();
         List<SkEntity> list = skDao.selectList(new LambdaQueryWrapper<SkEntity>().eq(target!=null,SkEntity::getId,target));
         List<SkVO> res = new ArrayList<>();
         for (SkEntity entity:list){
@@ -58,12 +55,12 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
 
     @Override
     public List<SkVO> getData1(Integer role) {
-        updateData();
+//        updateData1();
         List<Integer> ids = new ArrayList<>();
         List<SkVO> res = new ArrayList<>();
         switch (role){
-            case 4:
-                ids = Arrays.asList(36,37);
+            case 9:
+                ids = Arrays.asList(39);
                 break;
             default:
                 ids = Arrays.asList(38,39);
@@ -99,7 +96,9 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
         return res;
     }
 
-    public void updateData(){
+    @Override
+    public List<Person> updateData(){
+        List<Person> res = new ArrayList<>();
         String url = "https://api.whosfan.com.cn/api.php";
         HttpClient httpClient = new HttpClient();
         PostMethod postMethod = new PostMethod(url);
@@ -134,8 +133,11 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
                     entity2.setStock(stock);
                     skDao.updateById(entity1);
                     skDao.updateById(entity2);
+                    if (i == 0)
+                        res.add(new Person("单人拍照/拍手",stock.toString()));
+                    else
+                        res.add(new Person("团体拍照/签售",stock.toString()));
                 }
-
 //                SkEntity entity = list.get(count++);
 //                entity.setStock(itemStock);
 //                skDao.updateById(entity);
@@ -153,49 +155,50 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return res;
     }
 
     private void updateData1(){
-        String url = "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226549437648%22%7D&wdtoken=bc2502a6&_=1692160968431";
-        HttpClient httpClient = new HttpClient();
-        GetMethod getMethod = new GetMethod(url);
-        getMethod.addRequestHeader("Referer", "https://shop1723959802.v.weidian.com/");
-        getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
-        // 添加请求头
-        // 存储响应字符串并转化成json对象
-        String res_str = "";
-        JSONObject res_obj = null;
-        try {
-            int code = httpClient.executeMethod(getMethod);
-            if (code == 200){
-                List<SkEntity> list = skDao.selectList(new LambdaQueryWrapper<>());
-                // 表为空
-                if (list.size() == 0)
-                    throw new BusinessException("此表无数据");
-                // 获取开始的id
-                Integer count = 0;
-                // 处理响应结果
-                res_str = getMethod.getResponseBodyAsString();
-                res_obj = JSON.parseObject(res_str);
-                Map<String,Object> result = (Map<String, Object>) res_obj.get("result");
-                // 修改总销量
-                Integer itemStock = Integer.parseInt(result.get("itemStock").toString());
-                SkEntity entity = list.get(count++);
-                entity.setStock(itemStock);
-                skDao.updateById(entity);
-                // 修改单人销量
-                List<Map<String,Object>> skuInfos = (List<Map<String, Object>>) result.get("skuInfos");
-                for (int i=0;i<5;i++){
-                    Map<String, Object> map = skuInfos.get(i);
-                    Map<String,Object> skuInfo = (Map<String, Object>) map.get("skuInfo");
-                    Integer stock = Integer.parseInt(skuInfo.get("stock").toString());
-                    entity = list.get(count++);
-                    entity.setStock(stock);
-                    skDao.updateById(entity);
+        List<String> urls = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226691075153%22%7D&wdtoken=1254c38a&_=1696940132979"
+                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226694804763%22%7D&wdtoken=81ad8773&_=1697120714238"
+                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226694835207%22%7D&wdtoken=81ad8773&_=1697120491588"
+                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226695757022%22%7D&wdtoken=81ad8773&_=1697120676753"
+                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226695281871%22%7D&wdtoken=81ad8773&_=1697120786188"
+                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226694868409%22%7D&wdtoken=81ad8773&_=1697120829413");
+        Map<String,Integer> res = new HashMap<>();
+        for (String url:urls){
+            HttpClient httpClient = new HttpClient();
+            GetMethod getMethod = new GetMethod(url);
+            getMethod.addRequestHeader("Referer", "https://shop1723959802.v.weidian.com/");
+            getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+            // 添加请求头
+            // 存储响应字符串并转化成json对象
+            String res_str = "";
+            JSONObject res_obj = null;
+            try {
+                int code = httpClient.executeMethod(getMethod);
+                if (code == 200){
+                    res_str = getMethod.getResponseBodyAsString();
+                    res_obj = JSON.parseObject(res_str);
+                    Map<String,Object> result = (Map<String, Object>) res_obj.get("result");
+                    List<Map<String,Object>> skuInfos = (List<Map<String, Object>>) result.get("skuInfos");
+                    for (Map<String, Object> map : skuInfos){
+                        Map<String,Object> skuInfo = (Map<String, Object>) map.get("skuInfo");
+                        String name = skuInfo.get("title").toString().split(";")[0];
+                        Integer stock = Integer.parseInt(skuInfo.get("stock").toString());
+                        res.put(name,res.getOrDefault(name,0)+stock);
+                    }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        for (String name:res.keySet()){
+            SkEntity entity = skDao.selectOne(new LambdaQueryWrapper<SkEntity>().eq(SkEntity::getName, name));
+            if (entity == null)
+                throw new BusinessException("搜索不存在！");
+            entity.setStock(res.get(name));
+            skDao.updateById(entity);
         }
     }
 
