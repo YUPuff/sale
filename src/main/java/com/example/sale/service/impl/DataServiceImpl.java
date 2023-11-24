@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.sale.common.BusinessException;
 import com.example.sale.dao.DataKmsDao;
+import com.example.sale.dao.DataKmsSaleDao;
 import com.example.sale.dto.DataDTO;
 import com.example.sale.entity.DataKmsEntity;
+import com.example.sale.entity.DataKmsSaleEntity;
 import com.example.sale.vo.DataVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
 
     @Autowired
     private DataKmsDao dataKmsDao;
+
+    @Autowired
+    private DataKmsSaleDao dataKmsSaleDao;
 
     @Override
     public List<DataVO> getDataVd(DataDTO dataDTO,List<String> names,Integer begin) {
@@ -93,6 +98,37 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     }
 
     @Override
+    public List<DataVO> getDataKMSSale(DataDTO dataDTO, List<String> names, Integer begin) {
+        List<DataVO> res = new ArrayList<>();
+        // 获取用户输入的时间段
+        String user_start = dataDTO.getStart();
+        String user_end = dataDTO.getEnd();
+        // 获取今天的时间段
+        Calendar calendar = Calendar.getInstance();
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+        String today_start = today + " 00:00:00";
+        String today_end = today + " 23:59:59";
+
+        boolean flag1 = StringUtils.isNotBlank(user_start);
+        boolean flag2 = StringUtils.isNotBlank(user_end);
+        String start =  flag1 || flag2 ? user_start : today_start;
+        String end =  flag1 || flag2 ? user_end : today_end;
+        for (String name : names) {
+
+            List<Object> data = dataKmsSaleDao.selectObjs(new QueryWrapper<DataKmsSaleEntity>()
+                    .eq("name",name)
+                    .ge(StringUtils.isNotBlank(start),"time",start)
+                    .le(StringUtils.isNotBlank(end),"time",end)
+                    .select("distinct stock"));
+            DataVO dataVO = new DataVO(name,data);
+            generateChange(dataVO);
+            generateHistoryKMS(dataVO,calendar,name,begin);
+            res.add(dataVO);
+        }
+        return res;
+    }
+
+    @Override
     public List<DataEntity> searchVd(DataDTO dataDTO) {
         String small = dataDTO.getSmall();
         String big = dataDTO.getBig();
@@ -140,9 +176,9 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
 //            }else{
 //                map.put("date","10月"+(i-30)+"号");
 //            }
-            map.put("date","10月"+i+"号");
-            map.put("起始",data.size()>1 ? data.get(0) : null);
-            map.put("末尾",data.size()>1 ? data.get(data.size()-1) : null);
+            map.put("date","11月"+i+"号");
+            map.put("起始",data.size()>0 ? data.get(0) : null);
+            map.put("末尾",data.size()>0 ? data.get(data.size()-1) : null);
             list.add(map);
             calendar.add(Calendar.DATE,1);
         }
@@ -158,14 +194,14 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
             String day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String start = day + " 00:00:00";
             String end = day + " 23:59:59";
-            List<Object> data = dataKmsDao.selectObjs(new QueryWrapper<DataKmsEntity>()
+            List<Object> data = dataKmsSaleDao.selectObjs(new QueryWrapper<DataKmsSaleEntity>()
                     .eq("name",name)
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-            map.put("date","10月"+i+"号");
-            map.put("起始",data.size()>1 ? data.get(0) : null);
-            map.put("末尾",data.size()>1 ? data.get(data.size()-1) : null);
+            map.put("date","11月"+i+"号");
+            map.put("起始",data.size()>0 ? data.get(0) : null);
+            map.put("末尾",data.size()>0 ? data.get(data.size()-1) : null);
             list.add(map);
             calendar.add(Calendar.DATE,1);
         }
@@ -181,29 +217,7 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
             Integer interval = curr-pre;
             change.add(interval);
             pre = curr;
-//            if (interval<=0)
-//                continue;
-//            else if (interval<21){
-//                change[0]++;
-//            }else if (interval<51){
-//                change[1]++;
-//            }else if (interval<71){
-//                change[2]++;
-//            }else if (interval<101){
-//                change[3]++;
-//            }else if (interval<121){
-//                change[4]++;
-//            }else if (interval<151){
-//                change[5]++;
-//            }else if (interval<171){
-//                change[6]++;
-//            }else if (interval<201){
-//                change[7]++;
-//            }else if (interval<301){
-//                change[8]++;
-//            }else{
-//                change[9]++;
-//            }
         }
     }
+
 }

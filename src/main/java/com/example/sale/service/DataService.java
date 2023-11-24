@@ -18,6 +18,8 @@ public interface DataService extends IService<DataEntity> {
 
     List<DataVO> getDataKMS(DataDTO dataDTO,List<String> names,Integer begin);
 
+    List<DataVO> getDataKMSSale(DataDTO dataDTO,List<String> names,Integer begin);
+
     List<DataEntity> searchVd(DataDTO dataDTO);
 
     List<DataKmsEntity> searchKMS(DataDTO dataDTO);

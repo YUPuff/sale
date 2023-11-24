@@ -25,7 +25,11 @@ public interface UserService extends IService<UserEntity> {
 
     List<Person> getDataVd(List<String> urls,List<String> names);
 
+    List<Person> getDataVdForMul(List<String> urls,List<String> names);
+
     List<Person> getDataKMS(List<String> urls,List<String> names);
+
+    List<Person> getDataKMSForSale(List<String> urls,List<String> names);
 
 }
 

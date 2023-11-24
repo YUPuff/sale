@@ -10,6 +10,7 @@ import com.example.sale.dto.DataDTO;
 import com.example.sale.dto.IpDTO;
 import com.example.sale.dto.UserDTO;
 import com.example.sale.entity.LogEntity;
+import com.example.sale.entity.SkEntity;
 import com.example.sale.model.Person;
 import com.example.sale.utils.IpUtils;
 import com.example.sale.utils.JWTUtils;
@@ -117,6 +118,42 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         return res;
     }
 
+    @Override
+    public List<Person> getDataVdForMul(List<String> urls, List<String> names) {
+        List<Person> res = new ArrayList<>();
+        for (int i=0;i<urls.size();i++){
+            String url = urls.get(i);
+            Integer j = 2*i;
+            String name = null;
+            HttpClient httpClient = new HttpClient();
+            GetMethod getMethod = new GetMethod(url);
+            getMethod.addRequestHeader("Referer", "https://shop1723959802.v.weidian.com/");
+            getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+            // 添加请求头
+            // 存储响应字符串并转化成json对象
+            String res_str = "";
+            JSONObject res_obj = null;
+            try {
+                int code = httpClient.executeMethod(getMethod);
+                if (code == 200){
+                    res_str = getMethod.getResponseBodyAsString();
+                    res_obj = JSON.parseObject(res_str);
+                    Map<String,Object> result = (Map<String, Object>) res_obj.get("result");
+                    List<Map<String,Object>> skuInfos = (List<Map<String, Object>>) result.get("skuInfos");
+                    for (Map<String, Object> map : skuInfos){
+                        name = names.get(j++);
+                        Map<String,Object> skuInfo = (Map<String, Object>) map.get("skuInfo");
+                        res.add(new Person(name,skuInfo.get("stock").toString()));
+
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
 
     @Override
     public List<Person> getDataKMS(List<String> urls,List<String> names) {
@@ -140,6 +177,36 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
                     res_str = getMethod.getResponseBodyAsString();
                     res_obj = JSON.parseObject(res_str);
                     res.add(new Person(name,res_obj.get("totalStocks").toString()));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public List<Person> getDataKMSForSale(List<String> urls, List<String> names) {
+        List<Person> res = new ArrayList<>();
+
+        for (int i=0;i<names.size();i++) {
+            String name = names.get(i);
+            String url = urls.get(i);
+            HttpClient httpClient = new HttpClient();
+            GetMethod getMethod = new GetMethod(url);
+            // 添加请求头
+            getMethod.addRequestHeader("Referer", "http://page.kmstation.net/");
+            getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+            getMethod.addRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            // 存储响应字符串并转化成json对象
+            String res_str = "";
+            JSONObject res_obj = null;
+            try {
+                int code = httpClient.executeMethod(getMethod);
+                if (code == 200){
+                    res_str = getMethod.getResponseBodyAsString();
+                    res_obj = JSON.parseObject(res_str);
+                    res.add(new Person(name,res_obj.get("monthSales").toString()));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

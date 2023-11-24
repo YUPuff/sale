@@ -53,15 +53,10 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
     public List<YzyVO> getData1(Integer role) {
         List<YzyVO> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        if (role == 10){
-            list = Arrays.asList(99);
-        }else if (role == 9){
-            list = Arrays.asList(99,112,113);
-        }else if (role == 6){
-            list = Arrays.asList(112,113);
-        }else if (role == 7){
-            list = Arrays.asList(101,102);
+        if (role == 9){
+//            list = Arrays.asList(133,138,137);
         }
+
 
         for (Integer id : list) {
             YzyEntity entity = yzyDao.selectById(id);

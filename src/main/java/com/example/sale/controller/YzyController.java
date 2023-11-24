@@ -28,11 +28,11 @@ public class YzyController {
     private YzyService yzyService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","YZY","DINO","SK5","SK4","IT2","ZB1","BROWN"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","YZY","DINO","SK4","IT2"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         Integer role = userVO.getRole();
-        if (role >= 5)
+        if (role >= 4)
             return Result.success(yzyService.getData1(role));
         return Result.success(yzyService.getData(role==0 ? null : userVO.getTarget()));
     }

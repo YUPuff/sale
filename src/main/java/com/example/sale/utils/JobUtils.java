@@ -4,8 +4,10 @@ package com.example.sale.utils;
 import com.example.sale.constant.GroupConstants;
 import com.example.sale.dao.DataDao;
 import com.example.sale.dao.DataKmsDao;
+import com.example.sale.dao.DataKmsSaleDao;
 import com.example.sale.entity.DataEntity;
 import com.example.sale.entity.DataKmsEntity;
+import com.example.sale.entity.DataKmsSaleEntity;
 import com.example.sale.model.Person;
 import com.example.sale.service.DataService;
 import com.example.sale.service.SkService;
@@ -31,6 +33,9 @@ public class JobUtils {
     private DataKmsDao dataKmsDao;
 
     @Autowired
+    private DataKmsSaleDao dataKmsSaleDao;
+
+    @Autowired
     private SkService skService;
 
     /**
@@ -50,7 +55,42 @@ public class JobUtils {
 //    }
     @Scheduled(fixedDelay = 60000)
     public void task0() {
-        List<Person> data = userService.getDataVd(GroupConstants.urls_ive_vd,GroupConstants.names_ive);
+        List<Person> data = userService.getDataVd(GroupConstants.urls_sk_vd,GroupConstants.names_sk);
+        for (Person person:data){
+            DataEntity entity = new DataEntity();
+            BeanUtils.copyProperties(person,entity);
+            dataDao.insert(entity);
+        }
+    }
+//
+    @Scheduled(fixedDelay = 60000)
+    public void task1() {
+        List<Person> data = userService.getDataKMS(GroupConstants.urls_sk_kms,GroupConstants.names_sk);
+        for (Person person:data){
+            DataKmsEntity entity = new DataKmsEntity();
+            BeanUtils.copyProperties(person,entity);
+            dataKmsDao.insert(entity);
+        }
+    }
+
+    @Scheduled(fixedDelay = 60000)
+    public void task2() {
+        List<Person> data = userService.getDataKMSForSale(GroupConstants.urls_sk_kms,GroupConstants.names_sk);
+        for (Person person:data){
+            DataKmsSaleEntity entity = new DataKmsSaleEntity();
+            BeanUtils.copyProperties(person,entity);
+
+            dataKmsSaleDao.insert(entity);
+        }
+    }
+
+/**
+ *  另一组任务
+ */
+
+    @Scheduled(fixedDelay = 60000)
+    public void task3() {
+        List<Person> data = userService.getDataVdForMul(GroupConstants.urls_dz_vd,GroupConstants.names_dz_2);
         for (Person person:data){
             DataEntity entity = new DataEntity();
             BeanUtils.copyProperties(person,entity);
@@ -59,8 +99,8 @@ public class JobUtils {
     }
 
     @Scheduled(fixedDelay = 60000)
-    public void task1() {
-        List<Person> data = userService.getDataKMS(GroupConstants.urls_ive_kms,GroupConstants.names_ive);
+    public void task4() {
+        List<Person> data = userService.getDataKMS(GroupConstants.urls_dz_kms,GroupConstants.names_dz);
         for (Person person:data){
             DataKmsEntity entity = new DataKmsEntity();
             BeanUtils.copyProperties(person,entity);
@@ -68,23 +108,49 @@ public class JobUtils {
         }
     }
 
-//    @Scheduled(fixedDelay = 300000)
-//    public void task2() {
-//        List<Person> data = userService.getDataVd(GroupConstants.urls_riize_vd,GroupConstants.names_riize);
-//        for (Person person:data){
-//            DataEntity entity = new DataEntity();
-//            BeanUtils.copyProperties(person,entity);
-//            dataDao.insert(entity);
-//        }
-//    }
-//
-//    @Scheduled(fixedDelay = 300000)
-//    public void task3() {
-//        List<Person> data = userService.getDataKMS(GroupConstants.urls_riize_kms,GroupConstants.names_riize);
-//        for (Person person:data){
-//            DataKmsEntity entity = new DataKmsEntity();
-//            BeanUtils.copyProperties(person,entity);
-//            dataKmsDao.insert(entity);
-//        }
-//    }
+    @Scheduled(fixedDelay = 60000)
+    public void task5() {
+        List<Person> data = userService.getDataKMSForSale(GroupConstants.urls_dz_kms,GroupConstants.names_dz);
+        for (Person person:data){
+            DataKmsSaleEntity entity = new DataKmsSaleEntity();
+            BeanUtils.copyProperties(person,entity);
+
+            dataKmsSaleDao.insert(entity);
+        }
+    }
+
+    /**
+     *  另一组任务
+     */
+
+    @Scheduled(fixedDelay = 60000)
+    public void task6() {
+        List<Person> data = userService.getDataVdForMul(GroupConstants.urls_127_vd,GroupConstants.names_127_2);
+        for (Person person:data){
+            DataEntity entity = new DataEntity();
+            BeanUtils.copyProperties(person,entity);
+            dataDao.insert(entity);
+        }
+    }
+
+    @Scheduled(fixedDelay = 60000)
+    public void task7() {
+        List<Person> data = userService.getDataKMS(GroupConstants.urls_127_kms,GroupConstants.names_127);
+        for (Person person:data){
+            DataKmsEntity entity = new DataKmsEntity();
+            BeanUtils.copyProperties(person,entity);
+            dataKmsDao.insert(entity);
+        }
+    }
+
+    @Scheduled(fixedDelay = 60000)
+    public void task8() {
+        List<Person> data = userService.getDataKMSForSale(GroupConstants.urls_127_kms,GroupConstants.names_127);
+        for (Person person:data){
+            DataKmsSaleEntity entity = new DataKmsSaleEntity();
+            BeanUtils.copyProperties(person,entity);
+
+            dataKmsSaleDao.insert(entity);
+        }
+    }
 }

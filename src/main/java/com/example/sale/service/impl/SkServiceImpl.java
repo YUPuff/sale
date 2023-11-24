@@ -35,38 +35,40 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
 
     @Override
     public List<SkVO> getData(Integer target) {
-//        updateData1();
+        updateData3();
         List<SkEntity> list = skDao.selectList(new LambdaQueryWrapper<SkEntity>().eq(target!=null,SkEntity::getId,target));
-        List<SkVO> res = new ArrayList<>();
-        for (SkEntity entity:list){
-            SkVO skVO = new SkVO();
-            BeanUtils.copyProperties(entity,skVO);
-            Integer stockTotal = entity.getStockTotal();
-            Integer stock = entity.getStock();
-            Integer sale = stockTotal-stock;
-            skVO.setSale(sale);
-            Integer a = sale/entity.getBig();
-            Integer b = sale/entity.getSmall();
-            skVO.setCut(a+"~"+b) ;
-            res.add(skVO);
-        }
-        return res;
+//        List<SkVO> res = new ArrayList<>();
+//        for (SkEntity entity:list){
+//            SkVO skVO = new SkVO();
+//            BeanUtils.copyProperties(entity,skVO);
+//            Integer stockTotal = entity.getStockTotal();
+//            Integer stock = entity.getStock();
+//            Integer sale = stockTotal-stock;
+//            skVO.setSale(sale);
+//            Integer a = sale/entity.getBig();
+//            Integer b = sale/entity.getSmall();
+//            skVO.setCut(a+"~"+b) ;
+//            res.add(skVO);
+//        }
+//        return res;
+        return generateVOForSum(list);
     }
 
     @Override
     public List<SkVO> getData1(Integer role) {
-//        updateData1();
+        updateData3();
         List<Integer> ids = new ArrayList<>();
         List<SkVO> res = new ArrayList<>();
         switch (role){
-            case 9:
-                ids = Arrays.asList(39);
+            case 14:
+                ids = Arrays.asList(40,41);
                 break;
             default:
-                ids = Arrays.asList(38,39);
+                ids = Arrays.asList(40,41);
         }
         List<SkEntity> list = skDao.selectBatchIds(ids);
-        return generateVO(list);
+//        return generateVO(list);
+        return generateVOForSum(list);
     }
 
     @Override
@@ -96,6 +98,29 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
         return res;
     }
 
+    private List<SkVO> generateVOForSum(List<SkEntity> list){
+        List<SkVO> res = new ArrayList<>();
+        Integer sum = 0;
+        Integer small = 1;
+        Integer big = 1;
+        for(int i=0;i<list.size();i++){
+            SkEntity entity = list.get(i);
+            SkVO skVO = new SkVO();
+            BeanUtils.copyProperties(entity,skVO);
+            Integer stockTotal = entity.getStockTotal();
+            Integer stock = entity.getStock();
+            Integer sale = stockTotal-stock;
+            if (i>list.size()-3)
+                sale *= 9;
+            skVO.setSale(sale);
+            sum += sale;
+            big = entity.getBig();
+            small = entity.getSmall();
+            res.add(skVO);
+        }
+        res.add(new SkVO("总计",sum,sum/big+"~"+sum/small));
+        return res;
+    }
     @Override
     public List<Person> updateData(){
         List<Person> res = new ArrayList<>();
@@ -251,14 +276,37 @@ public class SkServiceImpl extends ServiceImpl<SkDao, SkEntity> implements SkSer
     }
 
     private void updateData3(){
-        List<String> urls = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226551247932%22%7D&wdtoken=781d3a55&_=1692190114280"
-                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226550403305%22%7D&wdtoken=781d3a55&_=1692190281399"
-                ,"https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226551313896%22%7D&wdtoken=781d3a55&_=1692190365013");
-        List<Integer> ids = Arrays.asList(31,32,33);
-        for (int i=0;i<3;i++) {
-            Integer id = ids.get(i);
-            SkEntity entity = skDao.selectById(id);
-            String url = urls.get(i);
+        List<String> urls = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226735426933%22%7D&wdtoken=a6a00fec&_=1697788091671",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226736392902%22%7D&wdtoken=a6a00fec&_=1697788266227",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743725200%22%7D&wdtoken=947a95a1&_=1698296396085",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742745311%22%7D&wdtoken=bcc0bc6c&_=1698316037161",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742756739%22%7D&wdtoken=947a95a1&_=1698296950678",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742849763%22%7D&wdtoken=947a95a1&_=1698297015951",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742756683%22%7D&wdtoken=947a95a1&_=1698297172853",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743758374%22%7D&wdtoken=bcc0bc6c&_=1698315963113",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742780189%22%7D&wdtoken=947a95a1&_=1698297219140",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743775956%22%7D&wdtoken=bcc0bc6c&_=1698315854450",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226740810607%22%7D&wdtoken=947a95a1&_=1698297363455",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226741798358%22%7D&wdtoken=bcc0bc6c&_=1698316101033",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743810428%22%7D&wdtoken=947a95a1&_=1698297494348",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742848383%22%7D&wdtoken=bcc0bc6c&_=1698316432432",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743803724%22%7D&wdtoken=bcc0bc6c&_=1698316495752",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743712552%22%7D&wdtoken=bcc0bc6c&_=1698316551252",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742740513%22%7D&wdtoken=bcc0bc6c&_=1698316580344",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743777872%22%7D&wdtoken=bcc0bc6c&_=1698316665514",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743739952%22%7D&wdtoken=bcc0bc6c&_=1698316814192",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743734000%22%7D&wdtoken=bcc0bc6c&_=1698316885266",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226744067414%22%7D&wdtoken=bcc0bc6c&_=1698316934468",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743085543%22%7D&wdtoken=bcc0bc6c&_=1698316985070",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742992023%22%7D&wdtoken=bcc0bc6c&_=1698317006777",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742894963%22%7D&wdtoken=bcc0bc6c&_=1698317063234",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226742756533%22%7D&wdtoken=bcc0bc6c&_=1698317085906",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226743724628%22%7D&wdtoken=bcc0bc6c&_=1698317124594",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226740204738%22%7D&wdtoken=d2f5ed99&_=1698894494330",
+                "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226740218910%22%7D&wdtoken=d2f5ed99&_=1698902050822");
+        for (int i=40;i<=67;i++) {
+            SkEntity entity = skDao.selectById(i);
+            String url = urls.get(i-40);
             HttpClient httpClient = new HttpClient();
             GetMethod getMethod = new GetMethod(url);
             // 添加请求头
