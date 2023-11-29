@@ -189,11 +189,11 @@ public interface GroupConstants {
             "刘扬扬前1000",
             "团体合影");
 
-    List<String> urls_dz_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900517760%22%7D&wdtoken=58c09d66&_=1700818529523",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899427365%22%7D&wdtoken=58c09d66&_=1700818664473",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900434966%22%7D&wdtoken=58c09d66&_=1700818694880",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899427359%22%7D&wdtoken=58c09d66&_=1700818709924",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899504091%22%7D&wdtoken=58c09d66&_=1700818771633");
+    List<String> urls_dz_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900517760%22%7D&wdtoken=b109df38&_=1701065011763",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899427365%22%7D&wdtoken=b109df38&_=1701065045233",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900434966%22%7D&wdtoken=b109df38&_=1701065067351",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899427359%22%7D&wdtoken=b109df38&_=1701065090495",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899504091%22%7D&wdtoken=b109df38&_=1701065104090");
 
     List<String> urls_dz_kms = Arrays.asList("https://kms.kmstation.net/prod/prodInfo?prodId=2972",
             "https://kms.kmstation.net/prod/prodInfo?prodId=2973",
@@ -207,15 +207,20 @@ public interface GroupConstants {
             "李帝努",
             "朴志晟");
     List<String> names_dz_2 = Arrays.asList("黄仁俊前1500",
-            "黄仁俊",
+            "黄仁俊随机",
+            "黄仁俊指定",
             "钟辰乐前1500",
-            "钟辰乐",
+            "钟辰乐随机",
+            "钟辰乐指定",
             "罗渽民前1500",
-            "罗渽民",
+            "罗渽民随机",
+            "罗渽民指定",
             "李帝努前1500",
-            "李帝努",
+            "李帝努随机",
+            "李帝努指定",
             "朴志晟前1500",
-            "朴志晟");
+            "朴志晟随机",
+            "朴志晟指定");
 
     List<String> urls_sk_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226870330269%22%7D&wdtoken=36cdd367&_=1700403866136",
              "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226870298647%22%7D&wdtoken=36cdd367&_=1700403945070",

@@ -121,14 +121,15 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     @Override
     public List<Person> getDataVdForMul(List<String> urls, List<String> names) {
         List<Person> res = new ArrayList<>();
+        int j = 0;
         for (int i=0;i<urls.size();i++){
             String url = urls.get(i);
-            Integer j = 2*i;
-            String name = null;
+//            String name = null;
             HttpClient httpClient = new HttpClient();
             GetMethod getMethod = new GetMethod(url);
-            getMethod.addRequestHeader("Referer", "https://shop1723959802.v.weidian.com/");
-            getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+//            getMethod.addRequestHeader("Connection", "close");
+            getMethod.addRequestHeader("Referer", "https://shop1382036085.v.weidian.com/");
+            getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
             // 添加请求头
             // 存储响应字符串并转化成json对象
             String res_str = "";
@@ -141,8 +142,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
                     Map<String,Object> result = (Map<String, Object>) res_obj.get("result");
                     List<Map<String,Object>> skuInfos = (List<Map<String, Object>>) result.get("skuInfos");
                     for (Map<String, Object> map : skuInfos){
-                        name = names.get(j++);
+                        String name = names.get(j++);
                         Map<String,Object> skuInfo = (Map<String, Object>) map.get("skuInfo");
+//                        String name = skuInfo.get("title").toString().split(";")[0];
                         res.add(new Person(name,skuInfo.get("stock").toString()));
 
                     }

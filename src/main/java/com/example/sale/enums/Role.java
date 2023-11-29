@@ -29,7 +29,7 @@ public enum Role {
 
     SK5(10,"sk5","SK5"),
 
-    ANDY(11,"andy","ANDY"),
+    JASMINE(11,"jas","JASMINE"),
 
     NCT3(12,"nct3","NCT3"),
 

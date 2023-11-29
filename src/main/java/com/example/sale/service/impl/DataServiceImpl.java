@@ -157,9 +157,9 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private void generateHistoryVd(DataVO dataVO,Calendar calendar,String name,Integer begin){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-//        int month = calendar.get(Calendar.MONTH);
-//        if (month == 9)
-//            today += 30;
+        int month = calendar.get(Calendar.MONTH);
+        if (month == 11)
+            today += 30;
         calendar.add(Calendar.DATE, -(today-begin));
         for (int i=begin;i<today;i++){
             Map<String,Object> map = new HashMap<>();
@@ -171,12 +171,12 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-//            if (i<31){
-//                map.put("date","9月"+i+"号");
-//            }else{
-//                map.put("date","10月"+(i-30)+"号");
-//            }
-            map.put("date","11月"+i+"号");
+            if (i<31){
+                map.put("date","11月"+i+"号");
+            }else{
+                map.put("date","12月"+(i-30)+"号");
+            }
+//            map.put("date","11月"+i+"号");
             map.put("起始",data.size()>0 ? data.get(0) : null);
             map.put("末尾",data.size()>0 ? data.get(data.size()-1) : null);
             list.add(map);
@@ -188,6 +188,9 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private void generateHistoryKMS(DataVO dataVO,Calendar calendar,String name,Integer begin){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        if (month == 11)
+            today += 30;
         calendar.add(Calendar.DATE, -(today-begin));
         for (int i=begin;i<today;i++){
             Map<String,Object> map = new HashMap<>();
@@ -199,7 +202,12 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-            map.put("date","11月"+i+"号");
+            if (i<31){
+                map.put("date","11月"+i+"号");
+            }else{
+                map.put("date","12月"+(i-30)+"号");
+            }
+//            map.put("date","11月"+i+"号");
             map.put("起始",data.size()>0 ? data.get(0) : null);
             map.put("末尾",data.size()>0 ? data.get(data.size()-1) : null);
             list.add(map);
