@@ -1,6 +1,7 @@
 package com.example.sale.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -46,4 +47,7 @@ public class SvEntity implements Serializable {
 	 * 大除数
 	 */
 	private Integer big;
+
+	@TableLogic
+	private Integer isDel;
 }

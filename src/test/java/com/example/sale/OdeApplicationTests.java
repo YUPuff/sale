@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 
 @SpringBootTest
@@ -94,12 +93,11 @@ class OdeApplicationTests {
 //        }
 //    }
 
-//    @Test
-//    public void test(){
-//        List<Person> data = userService.getDataVd(GroupConstants.urls_nct_vd,GroupConstants.names_nct);
-//        for (Person person:data){
-//            System.out.println(person);
-//        }
-//    }
+    @Test
+    public void test(){
+        List<Integer> list = new ArrayList<>();
+
+
+    }
 
 }

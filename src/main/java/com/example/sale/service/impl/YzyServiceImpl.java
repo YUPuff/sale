@@ -53,9 +53,13 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
     public List<YzyVO> getData1(Integer role) {
         List<YzyVO> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        if (role == 9){
-//            list = Arrays.asList(133,138,137);
-        }
+         if (role == 11){
+            list = Arrays.asList(153,154,155,156,157,158);
+        }else if (role == 10){
+             list = Arrays.asList(155,156,157,158);
+         }else if (role == 12){
+             list = Arrays.asList(153,154,155,157,158);
+         }
 
 
         for (Integer id : list) {
@@ -76,13 +80,13 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
 
     @Override
     public String getYao() {
-        String res = "null";
-        String url = "https://h5.youzan.com/wscgoods/tee-app/detail-v2.json?1005=undefined&activityId=&activityType=&alg=&alias=2737ekcfldnfwig&banner_id=~image_ad.1~0~GvVb8ChM&bizEnv=wsc&card_type=0&client=weapp&dc_ps=&from_uuid=en6QBIhcKg0Lieh1694777941294&fullPresaleSupportCart=true&img_ps=20%257C&isGoodsWeappNative=1&is_share=1&kdt_id=127635340&mpVersion=2.149.8&platform=weixin&scene=1005&share_from=weappCard&shopAutoEnter=1&subKdtId=0&umpAlias=&umpType=&withoutSkuDirectOrder=1&ump_alias=&ump_type=&oid=0&isDetailPrefetch=1%20HTTP/1.1";
+        StringBuffer sb = new StringBuffer();
+        String url = "https://api.whosfan.com.cn/api.php";
         HttpClient httpClient = new HttpClient();
         GetMethod getMethod = new GetMethod(url);
         // 添加请求头
-        getMethod.addRequestHeader("Referer", "https://servicewechat.com/wx360cd2418640589a/11/page-frame.html");
-        getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/8391");
+        getMethod.addRequestHeader("Referer", "https://whosfan.com.cn/");
+        getMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
         // 存储响应字符串并转化成json对象
         String res_str = "";
         JSONObject res_obj = null;
@@ -92,13 +96,18 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
                 res_str = getMethod.getResponseBodyAsString();
                 res_obj = JSON.parseObject(res_str);
                 Map<String,Object> data = (Map<String, Object>) res_obj.get("data");
-                Map<String,Object> spuStock = (Map<String, Object>) data.get("spuStock");
-                res = spuStock.get("stockNum").toString();
+                List <Map<String,Object>> dataList = (List<Map<String, Object>>) data.get("data_list");
+                List <Map<String,Object>> goods = (List<Map<String, Object>>) dataList.get(0).get("goods");
+                Map<String,Object> specifications = (Map<String, Object>) goods.get(0).get("specifications");
+                List <Map<String,Object>> choose = (List<Map<String, Object>>) specifications.get("choose");
+                List <Map<String,Object>> value = (List<Map<String, Object>>) choose.get(0).get("value");
+                sb.append("中国地址：").append(value.get(0).get("inventory")).append("；");
+                sb.append("韩国地址：").append(value.get(1).get("inventory"));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return res;
+        return sb.toString();
     }
 
     private YzyVO generateVO(YzyEntity entity){

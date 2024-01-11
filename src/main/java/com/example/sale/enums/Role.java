@@ -15,9 +15,9 @@ public enum Role {
 
     SV(3,"seventeen","SV"),
 
-    RIIZE(4,"riize","RIIZE"),
+    SK1(4,"sk1","SK1"),
 
-    IT2(5,"it2","IT2"),
+    SK2(5,"sk2","SK2"),
 
     ZB1(6,"zb1","ZB1"),
 
@@ -31,17 +31,15 @@ public enum Role {
 
     JASMINE(11,"jas","JASMINE"),
 
-    NCT3(12,"nct3","NCT3"),
+    CHERRY(12,"cherry","CHERRY"),
 
     DINO(13,"dino","DINO"),
 
     ZBO2(14,"zbo2","ZBO2"),
 
-    WAYV1(15,"wayv1","WAYV1"),
+    AE1(15,"ae1","AE1"),
 
-    SK1(16,"sk1","SK1"),
-
-    SK2(17,"sk2","SK2");
+    AE2(16,"ae2","AE2");
 
 
     private Integer code;

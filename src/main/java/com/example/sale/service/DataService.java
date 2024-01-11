@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.sale.dto.DataDTO;
 import com.example.sale.entity.DataEntity;
 import com.example.sale.entity.DataKmsEntity;
+import com.example.sale.vo.DataMulVO;
 import com.example.sale.vo.DataVO;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface DataService extends IService<DataEntity> {
 
     List<DataVO> getDataKMS(DataDTO dataDTO,List<String> names,Integer begin);
 
-    List<DataVO> getDataKMSSale(DataDTO dataDTO,List<String> names,Integer begin);
+    List<DataMulVO> getDataKMSSale(DataDTO dataDTO, List<String> names, Integer begin);
 
     List<DataEntity> searchVd(DataDTO dataDTO);
 

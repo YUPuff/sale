@@ -8,6 +8,7 @@ import com.example.sale.dao.DataKmsSaleDao;
 import com.example.sale.dto.DataDTO;
 import com.example.sale.entity.DataKmsEntity;
 import com.example.sale.entity.DataKmsSaleEntity;
+import com.example.sale.vo.DataMulVO;
 import com.example.sale.vo.DataVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,8 +99,8 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     }
 
     @Override
-    public List<DataVO> getDataKMSSale(DataDTO dataDTO, List<String> names, Integer begin) {
-        List<DataVO> res = new ArrayList<>();
+    public List<DataMulVO> getDataKMSSale(DataDTO dataDTO, List<String> names, Integer begin) {
+        List<DataMulVO> res = new ArrayList<>();
         // 获取用户输入的时间段
         String user_start = dataDTO.getStart();
         String user_end = dataDTO.getEnd();
@@ -115,14 +116,19 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
         String end =  flag1 || flag2 ? user_end : today_end;
         for (String name : names) {
 
-            List<Object> data = dataKmsSaleDao.selectObjs(new QueryWrapper<DataKmsSaleEntity>()
+            List<Object> stocksMS = dataKmsSaleDao.selectObjs(new QueryWrapper<DataKmsSaleEntity>()
                     .eq("name",name)
                     .ge(StringUtils.isNotBlank(start),"time",start)
                     .le(StringUtils.isNotBlank(end),"time",end)
-                    .select("distinct stock"));
-            DataVO dataVO = new DataVO(name,data);
-            generateChange(dataVO);
-            generateHistoryKMS(dataVO,calendar,name,begin);
+                    .select("distinct month_sale"));
+            List<Object> stocksSN = dataKmsSaleDao.selectObjs(new QueryWrapper<DataKmsSaleEntity>()
+                    .eq("name",name)
+                    .ge(StringUtils.isNotBlank(start),"time",start)
+                    .le(StringUtils.isNotBlank(end),"time",end)
+                    .select("distinct sold_num"));
+            DataMulVO dataVO = new DataMulVO(name,stocksMS,stocksSN);
+            generateChangeForMul(dataVO);
+            generateHistoryKMSForMul(dataVO,calendar,name,begin);
             res.add(dataVO);
         }
         return res;
@@ -157,9 +163,9 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private void generateHistoryVd(DataVO dataVO,Calendar calendar,String name,Integer begin){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        if (month == 11)
-            today += 30;
+//        int month = calendar.get(Calendar.MONTH);
+//        if (month == 11)
+//            today += 30;
         calendar.add(Calendar.DATE, -(today-begin));
         for (int i=begin;i<today;i++){
             Map<String,Object> map = new HashMap<>();
@@ -171,12 +177,12 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-            if (i<31){
-                map.put("date","11月"+i+"号");
-            }else{
-                map.put("date","12月"+(i-30)+"号");
-            }
-//            map.put("date","11月"+i+"号");
+//            if (i<31){
+//                map.put("date","11月"+i+"号");
+//            }else{
+//                map.put("date","12月"+(i-30)+"号");
+//            }
+            map.put("date","1月"+i+"号");
             map.put("起始",data.size()>0 ? data.get(0) : null);
             map.put("末尾",data.size()>0 ? data.get(data.size()-1) : null);
             list.add(map);
@@ -188,26 +194,26 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private void generateHistoryKMS(DataVO dataVO,Calendar calendar,String name,Integer begin){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        if (month == 11)
-            today += 30;
+//        int month = calendar.get(Calendar.MONTH);
+//        if (month == 11)
+//            today += 30;
         calendar.add(Calendar.DATE, -(today-begin));
         for (int i=begin;i<today;i++){
             Map<String,Object> map = new HashMap<>();
             String day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             String start = day + " 00:00:00";
             String end = day + " 23:59:59";
-            List<Object> data = dataKmsSaleDao.selectObjs(new QueryWrapper<DataKmsSaleEntity>()
+            List<Object> data = dataKmsDao.selectObjs(new QueryWrapper<DataKmsEntity>()
                     .eq("name",name)
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-            if (i<31){
-                map.put("date","11月"+i+"号");
-            }else{
-                map.put("date","12月"+(i-30)+"号");
-            }
-//            map.put("date","11月"+i+"号");
+//            if (i<31){
+//                map.put("date","11月"+i+"号");
+//            }else{
+//                map.put("date","12月"+(i-30)+"号");
+//            }
+            map.put("date","1月"+i+"号");
             map.put("起始",data.size()>0 ? data.get(0) : null);
             map.put("末尾",data.size()>0 ? data.get(data.size()-1) : null);
             list.add(map);
@@ -216,6 +222,50 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
         dataVO.setHistory(list);
     }
 
+    private void generateHistoryKMSForMul(DataMulVO dataVO,Calendar calendar,String name,Integer begin){
+        List<Map<String,Object>> listMS = new ArrayList<>();
+        List<Map<String,Object>> listSN = new ArrayList<>();
+        int today = calendar.get(Calendar.DAY_OF_MONTH);
+//        int month = calendar.get(Calendar.MONTH);
+//        if (month == 11)
+//            today += 30;
+        calendar.add(Calendar.DATE, -(today-begin));
+        for (int i=begin;i<today;i++){
+            Map<String,Object> mapMS = new HashMap<>();
+            Map<String,Object> mapSN = new HashMap<>();
+            String day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+            String start = day + " 00:00:00";
+            String end = day + " 23:59:59";
+            List<Object> dataMS = dataKmsSaleDao.selectObjs(new QueryWrapper<DataKmsSaleEntity>()
+                    .eq("name",name)
+                    .ge("time",start)
+                    .le("time",end)
+                    .select("distinct month_sale"));
+
+            List<Object> dataSN = dataKmsSaleDao.selectObjs(new QueryWrapper<DataKmsSaleEntity>()
+                    .eq("name",name)
+                    .ge("time",start)
+                    .le("time",end)
+                    .select("distinct sold_num"));
+
+//            if (i<31){
+//                map.put("date","11月"+i+"号");
+//            }else{
+//                map.put("date","12月"+(i-30)+"号");
+//            }
+            mapMS.put("date","1月"+i+"号");
+            mapMS.put("起始",dataMS.size()>0 ? dataMS.get(0) : null);
+            mapMS.put("末尾",dataMS.size()>0 ? dataMS.get(dataMS.size()-1) : null);
+            listMS.add(mapSN);
+            mapSN.put("date","1月"+i+"号");
+            mapSN.put("起始",dataSN.size()>0 ? dataSN.get(0) : null);
+            mapSN.put("末尾",dataSN.size()>0 ? dataSN.get(dataSN.size()-1) : null);
+            listSN.add(mapSN);
+            calendar.add(Calendar.DATE,1);
+        }
+        dataVO.setHistoryMS(listMS);
+        dataVO.setHistorySN(listSN);
+    }
     private void generateChange(DataVO dataVO){
         List<Object> stocks = dataVO.getStocks();
         List<Integer> change = dataVO.getChange();
@@ -224,6 +274,28 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
             Integer curr = Integer.parseInt(stocks.get(i).toString());
             Integer interval = curr-pre;
             change.add(interval);
+            pre = curr;
+        }
+    }
+
+    private void generateChangeForMul(DataMulVO dataMulVO){
+        List<Object> stocksMS = dataMulVO.getStocksMS();
+        List<Object> stocksSN = dataMulVO.getStocksSN();
+        List<Integer> changeMS = dataMulVO.getChangeMS();
+        List<Integer> changeSN = dataMulVO.getChangeSN();
+        Integer pre = (stocksMS.size() == 0 ? null : Integer.parseInt(stocksMS.get(0).toString()));
+        for (int i=1;i<stocksMS.size();i++){
+            Integer curr = Integer.parseInt(stocksMS.get(i).toString());
+            Integer interval = curr-pre;
+            changeMS.add(interval);
+            pre = curr;
+        }
+
+        pre = (stocksMS.size() == 0 ? null : Integer.parseInt(stocksSN.get(0).toString()));
+        for (int i=1;i<stocksSN.size();i++){
+            Integer curr = Integer.parseInt(stocksSN.get(i).toString());
+            Integer interval = curr-pre;
+            changeSN.add(interval);
             pre = curr;
         }
     }

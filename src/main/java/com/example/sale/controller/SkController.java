@@ -30,7 +30,8 @@ public class SkController {
         Integer role = userVO.getRole();
 //        if (role>3)
 //            return Result.success(skService.getData1(role));
-        return Result.success(skService.getData(role==0 || role==14 ? null : userVO.getTarget()));
+//        return Result.success(skService.getData(role==0 || role==14 ? null : userVO.getTarget()));
+        return Result.success();
     }
 
     @PostMapping("/edit")

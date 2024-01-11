@@ -36,7 +36,7 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         List<SvEntity> list = svDao.selectList(new LambdaQueryWrapper<SvEntity>().eq(target!=null,SvEntity::getId,target));
         List<SvVO> res = new ArrayList<>();
         for(SvEntity entity:list){
-            res.add(generateVO(entity));
+            res.add(generateVO(entity,target!=null));
         }
         return res;
     }
@@ -45,17 +45,22 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
     public List<SvVO> getData1(Integer role) {
         List<Integer> ids = new ArrayList<>();
         List<SvVO> res = new ArrayList<>();
-        if (role == 11){
-            ids = Arrays.asList(102,98,97,103,95,94,96,99,106,101);
-        }else if (role == 9){
-            ids = Arrays.asList(101,97,95,100,104,105,102,98,103,96);
+        if (role == 9){
+            ids = Arrays.asList(127,128,130,131);
+        }else if (role == 4){
+            ids = Arrays.asList(124,125);
+        }else if (role == 5){
+            ids = Arrays.asList(128,129);
+        }else if (role == 11){
+            ids = Arrays.asList(124,125,128);
         }else if (role == 10){
-            ids = Arrays.asList(97,100,102,104);
+            ids = Arrays.asList(126,127,128);
         }
+
 
         for (Integer id:ids) {
             SvEntity entity = svDao.selectById(id);
-            res.add(generateVO(entity));
+            res.add(generateVO(entity,true));
         }
         return res;
     }
@@ -97,7 +102,7 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
     }
 
 
-    private SvVO generateVO(SvEntity entity){
+    private SvVO generateVO(SvEntity entity,boolean flag){
         SvVO svVO = new SvVO();
         BeanUtils.copyProperties(entity,svVO);
         Integer sale = entity.getSale();
@@ -106,6 +111,8 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         Integer a = sale/entity.getBig();
         Integer b = sale/entity.getSmall();
         svVO.setNum(a+"~"+b);
+        // 对普通用户隐藏销量
+        if (flag) svVO.setSale(0);
         return svVO;
     }
 }

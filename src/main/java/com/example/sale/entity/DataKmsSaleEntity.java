@@ -26,10 +26,9 @@ public class DataKmsSaleEntity implements Serializable {
 	 */
 	private String name;
 
-	/**
-	 * 销量
-	 */
-	private String stock;
+	private String monthSale;
+
+	private String soldNum;
 
 	/**
 	 * 添加时间

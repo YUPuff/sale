@@ -5,6 +5,7 @@ import com.example.sale.dto.DataDTO;
 import com.example.sale.dto.UserDTO;
 import com.example.sale.entity.UserEntity;
 import com.example.sale.model.Person;
+import com.example.sale.model.PersonSale;
 import com.example.sale.vo.DataVO;
 import com.example.sale.vo.UserVO;
 
@@ -25,11 +26,15 @@ public interface UserService extends IService<UserEntity> {
 
     List<Person> getDataVd(List<String> urls,List<String> names);
 
+    List<Person> getDataKm(List<String> urls,List<String> names);
+
     List<Person> getDataVdForMul(List<String> urls,List<String> names);
 
     List<Person> getDataKMS(List<String> urls,List<String> names);
 
-    List<Person> getDataKMSForSale(List<String> urls,List<String> names);
+    List<Person> getDataKMSForMul(List<String> urls,List<String> names);
+
+    List<PersonSale> getDataKMSForSale(List<String> urls, List<String> names);
 
 }
 

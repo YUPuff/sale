@@ -5,16 +5,31 @@ import java.util.List;
 
 public interface GroupConstants {
 
-    List<String> urls_aespa_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226613808946%22%7D&wdtoken=53ea95ad&_=1694523591913",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226612713549%22%7D&wdtoken=53ea95ad&_=1694523780197",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226612770265%22%7D&wdtoken=53ea95ad&_=1694523823816",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226613879742%22%7D&wdtoken=53ea95ad&_=1694523688940");
+    List<String> urls_aespa_vd = Arrays.asList(
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951884409%22%7D&wdtoken=91747407&_=1701936902234",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226952795578%22%7D&wdtoken=91747407&_=1701937389115",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951872553%22%7D&wdtoken=91747407&_=1701937403738",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226952789546%22%7D&wdtoken=91747407&_=1701937354746"
+    );
 
-    List<String> urls_aespa_kms = Arrays.asList("https://kms.kmstation.net/prod/prodInfo?prodId=2812",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2815",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2813",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2814");
+    List<String> urls_aespa_kms = Arrays.asList(
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3004",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3006",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3005",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3007"
+    );
     List<String> names_aespa = Arrays.asList("柳智敏","吉赛尔","金玟庭","宁艺卓");
+
+    List<String> names_aespa_2 = Arrays.asList(
+            "柳智敏",
+            "柳智敏前1000",
+            "吉赛尔",
+            "吉赛尔前1000",
+            "金玟庭",
+            "金玟庭前1000",
+            "宁艺卓",
+            "宁艺卓前1000"
+    );
 
     List<String> urls_riize_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226615535609%22%7D&wdtoken=93cfaa98&_=1694607723252",
             "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226616585890%22%7D&wdtoken=93cfaa98&_=1694608414802",
@@ -113,23 +128,25 @@ public interface GroupConstants {
     List<String> names_ive = Arrays.asList("李瑞", "张元英", "安宥真", "金秋天", "直井怜", "LIZ");
 
 
-    List<String> urls_127_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900555838%22%7D&wdtoken=58c09d66&_=1700819412333",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900494646%22%7D&wdtoken=58c09d66&_=1700819525759",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900486770%22%7D&wdtoken=58c09d66&_=1700819583959",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900482748%22%7D&wdtoken=58c09d66&_=1700819629411",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900467042%22%7D&wdtoken=58c09d66&_=1700819673201",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900461000%22%7D&wdtoken=58c09d66&_=1700819706076",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899579847%22%7D&wdtoken=58c09d66&_=1700819732251",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899493091%22%7D&wdtoken=58c09d66&_=1700819765143");
+    List<String> urls_127_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951694663%22%7D&wdtoken=91747407&_=1701933852250",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951759789%22%7D&wdtoken=91747407&_=1701933981013",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226952670660%22%7D&wdtoken=91747407&_=1701934001422",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951738053%22%7D&wdtoken=91747407&_=1701934026817",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951674995%22%7D&wdtoken=91747407&_=1701934084816",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951694667%22%7D&wdtoken=91747407&_=1701934104342",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951684809%22%7D&wdtoken=91747407&_=1701934119948",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226951718225%22%7D&wdtoken=91747407&_=1701934150522");
 
-    List<String> urls_127_kms = Arrays.asList("https://kms.kmstation.net/prod/prodInfo?prodId=2978",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2983",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2981",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2980",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2976",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2979",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2977",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2982");
+    List<String> urls_127_kms = Arrays.asList(
+            "https://kms.kmstation.net/prod/prodInfo?prodId=2997",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=2999",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3003",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=2998",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3001",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=2996",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3002",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3000"
+    );
 
     List<String> names_127 = Arrays.asList("中本悠太",
             "金廷祐",
@@ -157,25 +174,29 @@ public interface GroupConstants {
             "李楷灿",
             "李楷灿前1000");
 
-    List<String> urls_wayv_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226828712242%22%7D&wdtoken=c1ff3b29&_=1699538754813",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226827702697%22%7D&wdtoken=c1ff3b29&_=1699538818801",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226828668872%22%7D&wdtoken=c1ff3b29&_=1699538835927",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226828668876%22%7D&wdtoken=c1ff3b29&_=1699538856491",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226827771629%22%7D&wdtoken=c1ff3b29&_=1699538874525",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226828678688%22%7D&wdtoken=c1ff3b29&_=1699538901336",
-            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226827700809%22%7D&wdtoken=c1ff3b29&_=1699538948548");
+    List<String> urls_wayv_vd = Arrays.asList(
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227121940795%22%7D&wdtoken=044ed834&_=1704704525876",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227122017657%22%7D&wdtoken=044ed834&_=1704704574244",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227121903387%22%7D&wdtoken=044ed834&_=1704704618803",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227122904964%22%7D&wdtoken=044ed834&_=1704704751329",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227122004003%22%7D&wdtoken=044ed834&_=1704704771197",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227121940785%22%7D&wdtoken=044ed834&_=1704704793651"
+    );
 
-    List<String> urls_wayv_kms = Arrays.asList("https://kms.kmstation.net/prod/prodInfo?prodId=2937",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2943",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2939",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2941",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2942",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2940",
-            "https://kms.kmstation.net/prod/prodInfo?prodId=2938");
+    List<String> urls_wayv_kms = Arrays.asList(
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3025",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3028",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3027",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3029",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3030",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3026"
+    );
 
-    List<String> names_wayv = Arrays.asList("钱锟", "李永钦", "董思成", "肖俊", "黄冠亨", "刘扬扬","团体合影");
 
-    List<String> names_wayv_2 = Arrays.asList("钱锟",
+    List<String> names_wayv = Arrays.asList("钱锟", "李永钦", "董思成", "肖俊", "黄冠亨", "刘扬扬");
+
+    List<String> names_wayv_2 = Arrays.asList(
+            "钱锟",
             "钱锟前1000",
             "李永钦",
             "李永钦前1000",
@@ -186,8 +207,8 @@ public interface GroupConstants {
             "黄冠亨",
             "黄冠亨前1000",
             "刘扬扬",
-            "刘扬扬前1000",
-            "团体合影");
+            "刘扬扬前1000"
+    );
 
     List<String> urls_dz_vd = Arrays.asList("https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226900517760%22%7D&wdtoken=b109df38&_=1701065011763",
             "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%226899427365%22%7D&wdtoken=b109df38&_=1701065045233",
@@ -241,4 +262,75 @@ public interface GroupConstants {
             "https://kms.kmstation.net/prod/prodInfo?prodId=2953");
 
     List<String> names_sk = Arrays.asList("梁精寅","韩知城","黄铉辰","李旻浩","方灿","徐彰彬","金昇玟","李龙馥");
+
+    List<String> urls_rv_vd = Arrays.asList(
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227028064808%22%7D&wdtoken=432d60e7&_=1703516627596",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227027191643%22%7D&wdtoken=432d60e7&_=1703516763756",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227027142387%22%7D&wdtoken=432d60e7&_=1703516783018",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227028118392%22%7D&wdtoken=432d60e7&_=1703516803060",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227027089137%22%7D&wdtoken=432d60e7&_=1703516838263"
+    );
+
+    List<String> urls_rv_kms = Arrays.asList(
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3017",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3016",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3014",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3015",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3013"
+    );
+
+    List<String> names_rv = Arrays.asList("裴珠泫","姜涩琪","孙胜完","朴秀荣","金艺琳");
+
+    List<String> names_rv_2 = Arrays.asList(
+            "裴珠泫",
+            "裴珠泫前1000",
+            "姜涩琪",
+            "姜涩琪前1000",
+            "孙胜完",
+            "孙胜完前1000",
+            "朴秀荣",
+            "朴秀荣前1000",
+            "金艺琳",
+            "金艺琳前1000"
+    );
+
+    List<String> urls_skg_vd = Arrays.asList(
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227082986633%22%7D&wdtoken=c382f855&_=1704105589259",
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227083964752%22%7D&wdtoken=c382f855&_=1704105646383"
+    );
+
+    List<String> urls_skg_kms = Arrays.asList(
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3021",
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3020"
+    );
+
+    List<String> names_skg = Arrays.asList("签名","合影");
+
+    List<String> names_skg_2 = Arrays.asList(
+            "签名A组",
+            "签名B组",
+            "合影A组",
+            "合影B组"
+    );
+
+    List<String> urls_wendy_vd = Arrays.asList(
+            "https://thor.weidian.com/detail/getItemSkuInfo/1.0?param=%7B%22itemId%22%3A%227106908151%22%7D&wdtoken=641483a4&_=1704547409999"
+    );
+
+    List<String> urls_wendy_kms = Arrays.asList(
+            "https://kms.kmstation.net/prod/prodInfo?prodId=3024"
+    );
+
+    List<String> names_wendy = Arrays.asList("wendy");
+
+    List<String> names_wendy_2 = Arrays.asList(
+            "wendy",
+            "wendy前1000"
+    );
+
+    List<String> urls_aespa_km = Arrays.asList("https://pre-ordersales.com/apps/get-pre-order-settings-for-product-image?shop_url=kmonstar.myshopify.com&productID=7204633837620&variantID=41685466284084&themeName=Dawn");
+
+    List<String> names_aespa_km = Arrays.asList(
+            "aespa台北"
+    );
 }
