@@ -163,9 +163,9 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private void generateHistoryVd(DataVO dataVO,Calendar calendar,String name,Integer begin){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-//        int month = calendar.get(Calendar.MONTH);
-//        if (month == 11)
-//            today += 30;
+        int month = calendar.get(Calendar.MONTH);
+        if (month == 12)
+            today += 31;
         calendar.add(Calendar.DATE, -(today-begin));
         for (int i=begin;i<today;i++){
             Map<String,Object> map = new HashMap<>();
@@ -177,12 +177,12 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-//            if (i<31){
-//                map.put("date","11月"+i+"号");
-//            }else{
-//                map.put("date","12月"+(i-30)+"号");
-//            }
-            map.put("date","1月"+i+"号");
+            if (i<32){
+                map.put("date","12月"+i+"号");
+            }else{
+                map.put("date","1月"+(i-31)+"号");
+            }
+//            map.put("date","12月"+i+"号");
             map.put("起始",data.size()>0 ? data.get(0) : null);
             map.put("末尾",data.size()>0 ? data.get(data.size()-1) : null);
             list.add(map);
@@ -194,9 +194,9 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
     private void generateHistoryKMS(DataVO dataVO,Calendar calendar,String name,Integer begin){
         List<Map<String,Object>> list = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-//        int month = calendar.get(Calendar.MONTH);
-//        if (month == 11)
-//            today += 30;
+        int month = calendar.get(Calendar.MONTH);
+        if (month == 12)
+            today += 31;
         calendar.add(Calendar.DATE, -(today-begin));
         for (int i=begin;i<today;i++){
             Map<String,Object> map = new HashMap<>();
@@ -208,12 +208,12 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
                     .ge("time",start)
                     .le("time",end)
                     .select("distinct stock"));
-//            if (i<31){
-//                map.put("date","11月"+i+"号");
-//            }else{
-//                map.put("date","12月"+(i-30)+"号");
-//            }
-            map.put("date","1月"+i+"号");
+            if (i<32){
+                map.put("date","12月"+i+"号");
+            }else{
+                map.put("date","1月"+(i-31)+"号");
+            }
+//            map.put("date","12月"+i+"号");
             map.put("起始",data.size()>0 ? data.get(0) : null);
             map.put("末尾",data.size()>0 ? data.get(data.size()-1) : null);
             list.add(map);
@@ -226,9 +226,9 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
         List<Map<String,Object>> listMS = new ArrayList<>();
         List<Map<String,Object>> listSN = new ArrayList<>();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
-//        int month = calendar.get(Calendar.MONTH);
-//        if (month == 11)
-//            today += 30;
+        int month = calendar.get(Calendar.MONTH);
+        if (month == 12)
+            today += 31;
         calendar.add(Calendar.DATE, -(today-begin));
         for (int i=begin;i<today;i++){
             Map<String,Object> mapMS = new HashMap<>();
@@ -253,11 +253,21 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
 //            }else{
 //                map.put("date","12月"+(i-30)+"号");
 //            }
-            mapMS.put("date","1月"+i+"号");
+//            mapMS.put("date","8月"+i+"号");
+            if (i<32){
+                mapMS.put("date","12月"+i+"号");
+            }else{
+                mapMS.put("date","1月"+(i-31)+"号");
+            }
             mapMS.put("起始",dataMS.size()>0 ? dataMS.get(0) : null);
             mapMS.put("末尾",dataMS.size()>0 ? dataMS.get(dataMS.size()-1) : null);
             listMS.add(mapSN);
-            mapSN.put("date","1月"+i+"号");
+//            mapSN.put("date","8月"+i+"号");
+            if (i<32){
+                mapSN.put("date","12月"+i+"号");
+            }else{
+                mapSN.put("date","1月"+(i-31)+"号");
+            }
             mapSN.put("起始",dataSN.size()>0 ? dataSN.get(0) : null);
             mapSN.put("末尾",dataSN.size()>0 ? dataSN.get(dataSN.size()-1) : null);
             listSN.add(mapSN);
@@ -300,4 +310,41 @@ public class DataServiceImpl extends ServiceImpl<DataDao, DataEntity> implements
         }
     }
 
+
+    @Override
+    public DataVO getChangeVd(String name) {
+
+        // 获取今天的时间段
+        Calendar calendar = Calendar.getInstance();
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+        String start = today + " 00:00:00";
+        String end = today + " 23:59:59";
+        List<Object> data = dataDao.selectObjs(new QueryWrapper<DataEntity>()
+                .eq("name",name)
+                .ge(StringUtils.isNotBlank(start),"time",start)
+                .le(StringUtils.isNotBlank(end),"time",end)
+                .select("distinct stock"));
+        DataVO dataVO = new DataVO(name,data);
+        generateChange(dataVO);
+        return dataVO;
+    }
+
+    @Override
+    public DataVO getChangeKMS(String name) {
+        // 获取用户输入的时间段
+
+        Calendar calendar = Calendar.getInstance();
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+        String start = today + " 00:00:00";
+        String end = today + " 23:59:59";
+
+        List<Object> data = dataKmsDao.selectObjs(new QueryWrapper<DataKmsEntity>()
+                .eq("name",name)
+                .ge(StringUtils.isNotBlank(start),"time",start)
+                .le(StringUtils.isNotBlank(end),"time",end)
+                .select("distinct stock"));
+        DataVO dataVO = new DataVO(name,data);
+        generateChange(dataVO);
+        return dataVO;
+    }
 }

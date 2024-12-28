@@ -24,14 +24,14 @@ public class SkController {
     private SkService skService;
 
     @GetMapping("/getData")
-    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SK","ZBO2"})
+    @RequiresRoles(logical = Logical.OR, value = {"ADMIN","SK", "LZM","HRJ","LDN","LKC","PZS","LMK","ZCL","SK4"})
     public Result getData(){
         UserVO userVO = UserThreadLocal.get();
         Integer role = userVO.getRole();
 //        if (role>3)
 //            return Result.success(skService.getData1(role));
-//        return Result.success(skService.getData(role==0 || role==14 ? null : userVO.getTarget()));
-        return Result.success();
+        return Result.success(skService.getData(role==0 ? null : userVO.getTarget(), role));
+//        return Result.success();
     }
 
     @PostMapping("/edit")

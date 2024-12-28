@@ -1,11 +1,15 @@
 package com.example.sale.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.sale.common.BusinessException;
 import com.example.sale.constant.ResultConstants;
+import com.example.sale.dao.DataDao;
 import com.example.sale.dto.CommonDTO;
 import com.example.sale.dto.FourDTO;
+import com.example.sale.entity.DataEntity;
 import com.example.sale.model.UserThreadLocal;
+import com.example.sale.vo.DataVO;
 import com.example.sale.vo.SvVO;
 import com.example.sale.vo.ThreeVO;
 import com.example.sale.vo.UserVO;
@@ -20,8 +24,10 @@ import com.example.sale.dao.SvDao;
 import com.example.sale.entity.SvEntity;
 import com.example.sale.service.SvService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -31,12 +37,15 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
     @Autowired
     private SvDao svDao;
 
+    @Autowired
+    private DataDao dataDao;
+
     @Override
     public List<SvVO> getData(Integer target) {
         List<SvEntity> list = svDao.selectList(new LambdaQueryWrapper<SvEntity>().eq(target!=null,SvEntity::getId,target));
         List<SvVO> res = new ArrayList<>();
         for(SvEntity entity:list){
-            res.add(generateVO(entity,target!=null));
+            res.add(generateVO(entity,target!=null&&target==189));
         }
         return res;
     }
@@ -45,16 +54,10 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
     public List<SvVO> getData1(Integer role) {
         List<Integer> ids = new ArrayList<>();
         List<SvVO> res = new ArrayList<>();
-        if (role == 9){
-            ids = Arrays.asList(127,128,130,131);
-        }else if (role == 4){
-            ids = Arrays.asList(124,125);
-        }else if (role == 5){
-            ids = Arrays.asList(128,129);
-        }else if (role == 11){
-            ids = Arrays.asList(124,125,128);
-        }else if (role == 10){
-            ids = Arrays.asList(126,127,128);
+        if (role == 6){
+//            ids = Arrays.asList(190,191,192,193,194,195,196,197);
+        }else if (role == 9){
+//            ids = Arrays.asList(190,191,194,196,197);
         }
 
 
@@ -106,13 +109,39 @@ public class SvServiceImpl extends ServiceImpl<SvDao, SvEntity> implements SvSer
         SvVO svVO = new SvVO();
         BeanUtils.copyProperties(entity,svVO);
         Integer sale = entity.getSale();
-        if ((entity.getId() == 17 || entity.getId() == 20) && UserThreadLocal.get().getRole() != 0)
-            svVO.setSale(0);
         Integer a = sale/entity.getBig();
         Integer b = sale/entity.getSmall();
         svVO.setNum(a+"~"+b);
         // 对普通用户隐藏销量
-        if (flag) svVO.setSale(0);
+//        if (flag) svVO.setSale(0);
+//        // 合影可见增幅
+//        if (svVO.getId()>=190){
+//            Calendar calendar = Calendar.getInstance();
+//            int today_day = calendar.get(Calendar.DAY_OF_MONTH);
+//            String today = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+//            calendar.add(Calendar.DATE, -(today_day-20));
+//            String start_day = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+////        int month = calendar.get(Calendar.MONTH);
+////        if (month == 11)
+////            today += 30;
+//            String day_start = start_day + " 00:00:00";
+//            String day_end = today + " 23:59:59";
+//            List<Object> data = dataDao.selectObjs(new QueryWrapper<DataEntity>()
+//                    .eq("name", svVO.getName())
+//                    .ge("time",day_start)
+//                    .le("time",day_end)
+//                    .select("distinct stock"));
+//
+//            List<Integer> change = new ArrayList<>();
+//            Integer pre = (data.size() == 0 ? null : Integer.parseInt(data.get(0).toString()));
+//            for (int i=1;i<data.size();i++){
+//                Integer curr = Integer.parseInt(data.get(i).toString());
+//                Integer interval = curr-pre;
+//                change.add(interval);
+//                pre = curr;
+//            }
+//            svVO.setChange(change);
+//        }
         return svVO;
     }
 }

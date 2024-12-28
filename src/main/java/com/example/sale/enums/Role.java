@@ -15,25 +15,27 @@ public enum Role {
 
     SV(3,"seventeen","SV"),
 
-    SK1(4,"sk1","SK1"),
-
-    SK2(5,"sk2","SK2"),
-
-    ZB1(6,"zb1","ZB1"),
-
-    BROWN(7,"brown","BROWN"),
-
-    DREAM(8,"dream","DREAM"),
-
     SK4(9,"sk4","SK4"),
 
-    SK5(10,"sk5","SK5"),
+    LZM(4,"LZM","LZM"),
+
+    HRJ(5,"HRJ","HRJ"),
+
+    LDN(6,"LDN","LDN"),
+
+    LKC(7,"LKC","LKC"),
+
+    PZS(8,"PZS","PZS"),
+
+    LMK(12,"LMK","LMK"),
+
+    ZCL(13,"ZCL","ZCL"),
 
     JASMINE(11,"jas","JASMINE"),
 
-    CHERRY(12,"cherry","CHERRY"),
-
-    DINO(13,"dino","DINO"),
+//    CHERRY(12,"cherry","CHERRY"),
+//
+//    DINO(13,"dino","DINO"),
 
     ZBO2(14,"zbo2","ZBO2"),
 

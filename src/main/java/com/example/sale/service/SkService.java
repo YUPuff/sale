@@ -15,12 +15,16 @@ import java.util.Map;
  */
 public interface SkService extends IService<SkEntity> {
 
-    List<SkVO> getData(Integer target);
+    List<SkVO> getData(Integer target,Integer role);
 
     List<SkVO> getData1(Integer role);
 
     void edit(SkDTO skDTO);
 
     List<Person> updateData();
+
+    void updateData4();
+
+    void updateDataForSK(List<Person> persons);
 }
 

@@ -53,13 +53,13 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
     public List<YzyVO> getData1(Integer role) {
         List<YzyVO> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-         if (role == 11){
-            list = Arrays.asList(153,154,155,156,157,158);
-        }else if (role == 10){
-             list = Arrays.asList(155,156,157,158);
-         }else if (role == 12){
-             list = Arrays.asList(153,154,155,157,158);
-         }
+        if (role == 11){
+//            list = Arrays.asList(183,182,180,184,181);
+        }else if (role == 9){
+            list = Arrays.asList(172,174,175,177);
+        }else if (role == 12){
+//            list = Arrays.asList(174,175);
+        }
 
 
         for (Integer id : list) {
@@ -114,8 +114,8 @@ public class YzyServiceImpl extends ServiceImpl<YzyDao, YzyEntity> implements Yz
         YzyVO yzyVO = new YzyVO();
         BeanUtils.copyProperties(entity,yzyVO);
         Integer sale = yzyVO.getSale();
-//        if ((entity.getId() == 100 || entity.getId() == 102) && UserThreadLocal.get().getRole() != 0)
-//            yzyVO.setSale(0);
+        if ((entity.getId() == 171) && UserThreadLocal.get().getRole() != 0)
+            yzyVO.setSale(0);
         Integer a = sale/entity.getBig();
         Integer b = sale/entity.getSmall();
         yzyVO.setCut(a+"~"+b);

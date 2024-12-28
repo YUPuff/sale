@@ -10,6 +10,7 @@ import com.example.sale.vo.DataVO;
 import com.example.sale.vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -27,6 +28,9 @@ public interface UserService extends IService<UserEntity> {
     List<Person> getDataVd(List<String> urls,List<String> names);
 
     List<Person> getDataKm(List<String> urls,List<String> names);
+    List<Person> getDataKm2(List<String> urls,List<String> names);
+
+    List<Person> getDataSR(String url,List<String> ids) throws UnsupportedEncodingException;
 
     List<Person> getDataVdForMul(List<String> urls,List<String> names);
 
@@ -35,6 +39,8 @@ public interface UserService extends IService<UserEntity> {
     List<Person> getDataKMSForMul(List<String> urls,List<String> names);
 
     List<PersonSale> getDataKMSForSale(List<String> urls, List<String> names);
+
+    List<Person> getDataKMSList(List<String> names);
 
 }
 

@@ -2,6 +2,8 @@ package com.example.sale.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class SvVO {
 
@@ -12,4 +14,6 @@ public class SvVO {
     private String name;
 
     private String num;
+
+    private List<Integer> change;
 }

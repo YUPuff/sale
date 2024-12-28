@@ -25,5 +25,12 @@ public interface DataService extends IService<DataEntity> {
 
     List<DataKmsEntity> searchKMS(DataDTO dataDTO);
 
+
+
+
+    DataVO getChangeVd(String name);
+
+    DataVO getChangeKMS(String name);
+
 }
 
